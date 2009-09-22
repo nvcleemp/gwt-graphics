@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="GWT Graphics" default="all" basedir=".">
+  <description>
+    GWT Graphics build file.
+  </description>
+
+  <!-- set classpath -->
+  <path id="project.class.path">
+    <pathelement path="${java.class.path}/"/>
+    <pathelement path="/Applications/eclipse35/plugins/com.google.gwt.eclipse.sdkbundle.macosx_1.7.0.v200907291526/gwt-mac-1.7.0/gwt-user.jar"/>
+
+    <!-- Additional dependencies (such as junit) go here -->
+  </path>
+
+  <target name="compile" description="Compile src to bin">
+    <mkdir dir="bin"/>
+    <javac srcdir="src" destdir="bin" includes="**" excludes="**/com/vaadin/contrib/gwtgraphics/testapp/**" debug="on" debuglevel="lines,vars,source" source="1.5">
+      <classpath refid="project.class.path"/>
+    </javac>
+  </target>
+
+  <target name="package" depends="compile" description="Package up the project as a jar">
+    <jar destfile="build/gwt-graphics.jar">
+      <fileset dir="bin">
+        <include name="**/*.class"/>
+      </fileset>
+      <!-- Get everything; source, modules, html files -->
+      <fileset dir="src" excludes="**/com/vaadin/contrib/gwtgraphics/testapp/**"/>
+    </jar>
+  </target>
+  
+  <target name="package-testapp-war">
+      <war destfile="build/gwt-graphics-test.war" webxml="war/WEB-INF/web.xml">
+			<fileset dir="war" includes="**" />
+	  </war>
+  </target>
+
+  <target name="clean">
+    <!-- Delete the bin directory tree -->
+    <delete file="build/gwt-graphics.jar"/>
+  	<delete file="build/gwt-graphics-test.war"/>
+    <delete>
+      <fileset dir="bin" includes="**/*.class"/>
+    </delete>
+  </target>
+
+  <target name="all" depends="package,package-testapp-war"/>
+
+</project>
