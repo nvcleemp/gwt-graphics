@@ -30,6 +30,7 @@ public class Line extends VectorObject implements Strokeable, Animatable {
 		setX2(x2);
 		setY2(y2);
 		setStrokeWidth(1);
+		setStrokeOpacity(1);
 		setStrokeColor("black");
 	}
 
@@ -199,8 +200,8 @@ public class Line extends VectorObject implements Strokeable, Animatable {
 			setStrokeOpacity(value);
 		} else if ("strokewidth".equals(property)) {
 			setStrokeWidth((int) value);
-		}else if ("rotation".equals(property)) {
+		} else if ("rotation".equals(property)) {
 			setRotation((int) value);
-		} 
+		}
 	}
 }

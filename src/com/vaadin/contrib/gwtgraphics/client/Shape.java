@@ -18,13 +18,17 @@ public abstract class Shape extends VectorObject implements Strokeable,
 	 * 
 	 * <pre>
 	 * setFillColor(&quot;white&quot;);
+	 * setFillOpacity(1);
 	 * setStrokeColor(&quot;black&quot;);
+	 * setStrokeOpacity(1);
 	 * setStrokeWidth(1);
 	 * </pre>
 	 */
 	public Shape() {
 		setFillColor("white");
+		setFillOpacity(1);
 		setStrokeColor("black");
+		setStrokeOpacity(1);
 		setStrokeWidth(1);
 	}
 
@@ -193,8 +197,8 @@ public abstract class Shape extends VectorObject implements Strokeable,
 			setStrokeOpacity(value);
 		} else if ("strokewidth".equals(property)) {
 			setStrokeWidth((int) value);
-		}else if ("rotation".equals(property)) {
+		} else if ("rotation".equals(property)) {
 			setRotation((int) value);
-		} 
+		}
 	}
 }

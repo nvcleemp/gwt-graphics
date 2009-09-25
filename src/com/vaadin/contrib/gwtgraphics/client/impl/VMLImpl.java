@@ -131,12 +131,7 @@ public class VMLImpl extends SVGImpl {
 
 	@Override
 	public String getFillColor(Element element) {
-		Element fill = VMLUtil.getOrCreateChildElementWithTagName(element,
-				"fill");
-		if (!fill.getPropertyBoolean("on")) {
-			return null;
-		}
-		return fill.getPropertyString("color");
+		return element.getPropertyString("_fill-color");
 	}
 
 	@Override
@@ -150,26 +145,24 @@ public class VMLImpl extends SVGImpl {
 			fill.setPropertyString("color", color);
 			fill.setPropertyBoolean("on", true);
 		}
+		element.setPropertyString("_fill-color", color);
 	}
 
 	@Override
 	public double getFillOpacity(Element element) {
-		return NumberUtil.parseDoubleValue(VMLUtil
-				.getPropertyOfFirstChildElementWithTagName(element, "fill",
-						"opacity"), 1);
+		return element.getPropertyDouble("_fill-opacity");
 	}
 
 	@Override
 	public void setFillOpacity(Element element, double opacity) {
 		VMLUtil.getOrCreateChildElementWithTagName(element, "fill")
 				.setPropertyString("opacity", "" + opacity);
+		element.setPropertyDouble("_fill-opacity", opacity);
 	}
 
 	@Override
 	public String getStrokeColor(Element element) {
-		return VMLUtil.getPropertyOfFirstChildElementWithTagName(element,
-				"stroke", "color");
-
+		return element.getPropertyString("_stroke-color");
 	}
 
 	@Override
@@ -178,6 +171,7 @@ public class VMLImpl extends SVGImpl {
 				"stroke");
 		stroke.setPropertyString("color", color);
 		stroke.setPropertyBoolean("on", color != null ? true : false);
+		element.setPropertyString("_stroke-color", color);
 	}
 
 	@Override
@@ -197,15 +191,14 @@ public class VMLImpl extends SVGImpl {
 
 	@Override
 	public double getStrokeOpacity(Element element) {
-		return NumberUtil.parseDoubleValue(VMLUtil
-				.getPropertyOfFirstChildElementWithTagName(element, "stroke",
-						"opacity"), 1);
+		return element.getPropertyDouble("_stroke-opacity");
 	}
 
 	@Override
 	public void setStrokeOpacity(Element element, double opacity) {
 		VMLUtil.getOrCreateChildElementWithTagName(element, "stroke")
 				.setPropertyString("opacity", "" + opacity);
+		element.setPropertyDouble("_stroke-opacity", opacity);
 	}
 
 	@Override
@@ -463,6 +456,19 @@ public class VMLImpl extends SVGImpl {
 	@Override
 	public void add(Element root, Element element) {
 		root.appendChild(element);
+		applyFillAndStroke(element);
+	}
+
+	private void applyFillAndStroke(Element element) {
+		if (element.getElementsByTagName("fill").getLength() > 0) {
+			setFillColor(element, getFillColor(element));
+			setFillOpacity(element, getFillOpacity(element));
+		}
+		if (element.getElementsByTagName("stroke").getLength() > 0) {
+			setStrokeColor(element, getStrokeColor(element));
+			setStrokeOpacity(element, getStrokeOpacity(element));
+			setStrokeWidth(element, getStrokeWidth(element));
+		}
 	}
 
 	@Override
