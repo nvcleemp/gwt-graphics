@@ -114,8 +114,10 @@ public class DrawingArea extends Widget implements VectorObjectContainer,
 	 * (com.itmill.toolkit.incubator.graphics.client.VectorObject)
 	 */
 	public VectorObject pop(VectorObject vo) {
-		remove(vo);
-		add(vo);
+		if (vo.getParent() != this) {
+			return null;
+		}
+		getImpl().pop(root, vo.getElement());
 		return vo;
 	}
 

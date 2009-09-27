@@ -1,7 +1,7 @@
 package com.vaadin.contrib.gwtgraphics.client.animation;
 
 /**
- * Classes implementing this interface can be animated by using the Animator
+ * Classes implementing this interface can be animated by using the Animate
  * class.
  * 
  * @author Henri Kerola / IT Mill Ltd

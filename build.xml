@@ -3,6 +3,9 @@
   <description>
     GWT Graphics build file.
   </description>
+  
+  <property file="build.properties" />
+  <mkdir dir="${build.dir}" />
 
   <!-- set classpath -->
   <path id="project.class.path">
@@ -20,7 +23,7 @@
   </target>
 
   <target name="package" depends="compile" description="Package up the project as a jar">
-    <jar destfile="build/gwt-graphics.jar">
+    <jar destfile="${build.dir}/gwt-graphics-${version}.jar">
       <fileset dir="bin">
         <include name="**/*.class"/>
       </fileset>
@@ -30,20 +33,24 @@
   </target>
   
   <target name="package-testapp-war">
-      <war destfile="build/gwt-graphics-test.war" webxml="war/WEB-INF/web.xml">
+      <war destfile="${build.dir}/gwt-graphics-test.war" webxml="war/WEB-INF/web.xml">
 			<fileset dir="war" includes="**" />
 	  </war>
   </target>
 
   <target name="clean">
     <!-- Delete the bin directory tree -->
-    <delete file="build/gwt-graphics.jar"/>
-  	<delete file="build/gwt-graphics-test.war"/>
+    <delete file="${build.dir}/gwt-graphics-${version}.jar"/>
+  	<delete file="${build.dir}/gwt-graphics-test.war"/>
     <delete>
       <fileset dir="bin" includes="**/*.class"/>
     </delete>
   </target>
+  
+   <target name="javadoc">
+        <javadoc access="public" author="true" classpath="/Applications/eclipse35/plugins/com.google.gwt.eclipse.sdkbundle.macosx_1.7.0.v200907291526/gwt-mac-1.7.0/gwt-dev-mac.jar:/Applications/eclipse35/plugins/com.google.gwt.eclipse.sdkbundle.macosx_1.7.0.v200907291526/gwt-mac-1.7.0/gwt-user.jar" destdir="javadocs" doctitle="GWT Graphics" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="com.vaadin.contrib.gwtgraphics.client.shape.path,com.vaadin.contrib.gwtgraphics.client.shape,com.vaadin.contrib.gwtgraphics.client,com.vaadin.contrib.gwtgraphics.client.animation" source="1.5" sourcepath="src" splitindex="true" use="true" version="true"/>
+    </target>
 
-  <target name="all" depends="package,package-testapp-war"/>
+  <target name="all" depends="package,package-testapp-war,javadoc"/>
 
 </project>

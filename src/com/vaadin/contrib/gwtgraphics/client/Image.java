@@ -87,7 +87,8 @@ public class Image extends VectorObject implements Positionable, Animatable {
 	/**
 	 * Sets the URL of the image to be shown.
 	 * 
-	 * @return URL of the image to be shown
+	 * @param href
+	 *            URL of the image to be shown
 	 */
 	public void setHref(String href) {
 		getImpl().setImageHref(getElement(), href);
@@ -150,6 +151,6 @@ public class Image extends VectorObject implements Positionable, Animatable {
 			setHeight((int) value);
 		} else if ("rotation".equals(property)) {
 			setRotation((int) value);
-		} 
+		}
 	}
 }

@@ -63,9 +63,10 @@ public class Group extends VectorObject implements VectorObjectContainer {
 	 * (com.itmill.toolkit.incubator.graphics.client.VectorObject)
 	 */
 	public VectorObject pop(VectorObject vo) {
-		// getImpl().pop(getElement(), vo.getElement());
-		remove(vo);
-		add(vo);
+		if (vo.getParent() != this) {
+			return null;
+		}
+		getImpl().pop(getElement(), vo.getElement());
 		return vo;
 	}
 

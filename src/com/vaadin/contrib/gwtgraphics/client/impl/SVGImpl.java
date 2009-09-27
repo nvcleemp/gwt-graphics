@@ -289,7 +289,6 @@ public class SVGImpl {
 	}
 
 	public void pop(Element root, Element element) {
-		root.removeChild(element);
 		root.appendChild(element);
 	}
 
