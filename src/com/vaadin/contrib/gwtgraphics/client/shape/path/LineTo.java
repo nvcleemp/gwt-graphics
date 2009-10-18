@@ -22,4 +22,9 @@ public class LineTo extends MoveTo {
 	public LineTo(boolean relativeCoords, int x, int y) {
 		super(relativeCoords, x, y);
 	}
+
+	@Override
+	public String getSVGString() {
+		return isRelativeCoords() ? "l" : "L" + getX() + " " + getY();
+	}
 }

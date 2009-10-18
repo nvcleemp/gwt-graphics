@@ -3,6 +3,8 @@ package com.vaadin.contrib.gwtgraphics.client.impl;
 import java.util.List;
 
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.DeferredCommand;
 import com.vaadin.contrib.gwtgraphics.client.Group;
 import com.vaadin.contrib.gwtgraphics.client.Image;
 import com.vaadin.contrib.gwtgraphics.client.Line;
@@ -15,7 +17,9 @@ import com.vaadin.contrib.gwtgraphics.client.shape.Ellipse;
 import com.vaadin.contrib.gwtgraphics.client.shape.Path;
 import com.vaadin.contrib.gwtgraphics.client.shape.Rectangle;
 import com.vaadin.contrib.gwtgraphics.client.shape.Text;
+import com.vaadin.contrib.gwtgraphics.client.shape.path.Arc;
 import com.vaadin.contrib.gwtgraphics.client.shape.path.ClosePath;
+import com.vaadin.contrib.gwtgraphics.client.shape.path.CurveTo;
 import com.vaadin.contrib.gwtgraphics.client.shape.path.LineTo;
 import com.vaadin.contrib.gwtgraphics.client.shape.path.MoveTo;
 import com.vaadin.contrib.gwtgraphics.client.shape.path.PathStep;
@@ -215,6 +219,23 @@ public class SVGImpl {
 				LineTo lineTo = (LineTo) step;
 				path.append(lineTo.isRelativeCoords() ? " l" : " L").append(
 						lineTo.getX()).append(" ").append(lineTo.getY());
+			} else if (step.getClass() == CurveTo.class) {
+				CurveTo curve = (CurveTo) step;
+				path.append(curve.isRelativeCoords() ? " c" : " C");
+				path.append(curve.getX1()).append(" ").append(curve.getY1());
+				path.append(" ").append(curve.getX2()).append(" ").append(
+						curve.getY2());
+				path.append(" ").append(curve.getX()).append(" ").append(
+						curve.getY());
+			} else if (step.getClass() == Arc.class) {
+				Arc arc = (Arc) step;
+				path.append(arc.isRelativeCoords() ? " a" : " A");
+				path.append(arc.getRx()).append(",").append(arc.getRy());
+				path.append(" ").append(arc.getxAxisRotation());
+				path.append(" ").append(arc.isLargeArc() ? "1" : "0").append(
+						",").append(arc.isSweep() ? "1" : "0");
+				path.append(" ").append(arc.getX()).append(",").append(
+						arc.getY());
 			}
 		}
 
@@ -302,17 +323,21 @@ public class SVGImpl {
 		SVGUtil.setClassName(element, name + "-" + getStyleSuffix());
 	}
 
-	public void setRotation(Element element, int degree) {
+	public void setRotation(final Element element, final int degree) {
 		element.setPropertyInt("_rotation", degree);
 		if (degree == 0) {
 			SVGUtil.setAttributeNS(element, "transform", "");
 			return;
 		}
-		SVGBBox box = SVGUtil.getBBBox(element);
-		int x = box.getX() + box.getWidth() / 2;
-		int y = box.getY() + box.getHeight() / 2;
-		SVGUtil.setAttributeNS(element, "transform", "rotate(" + degree + " "
-				+ x + " " + y + ")");
+		DeferredCommand.addCommand(new Command() {
+			public void execute() {
+				SVGBBox box = SVGUtil.getBBBox(element);
+				int x = box.getX() + box.getWidth() / 2;
+				int y = box.getY() + box.getHeight() / 2;
+				SVGUtil.setAttributeNS(element, "transform", "rotate(" + degree
+						+ " " + x + " " + y + ")");
+			}
+		});
 	}
 
 	public int getRotation(Element element) {

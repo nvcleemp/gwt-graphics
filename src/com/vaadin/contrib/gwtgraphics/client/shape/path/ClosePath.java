@@ -13,4 +13,9 @@ public class ClosePath extends PathStep {
 	 */
 	public ClosePath() {
 	}
+
+	@Override
+	public String getSVGString() {
+		return "z";
+	}
 }

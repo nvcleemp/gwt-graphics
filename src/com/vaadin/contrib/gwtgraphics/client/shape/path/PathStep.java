@@ -8,4 +8,10 @@ package com.vaadin.contrib.gwtgraphics.client.shape.path;
  */
 public abstract class PathStep {
 
+	public abstract String getSVGString();
+
+	@Override
+	public String toString() {
+		return getSVGString();
+	}
 }

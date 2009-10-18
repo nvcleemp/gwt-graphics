@@ -41,7 +41,18 @@ public abstract class SVGUtil {
 	}-*/;
 
 	public static native SVGBBox getBBBox(Element element) /*-{
-		return element.getBBox();
+		var bbox = null;
+		if (element.parentNode) {
+		bbox = element.getBBox();
+		} else {
+		var ns = @com.vaadin.contrib.gwtgraphics.client.impl.util.SVGUtil::SVG_NS;
+		var svg = $doc.createElementNS(ns, "svg");
+		svg.appendChild(element);
+		$doc.documentElement.appendChild(svg);
+		bbox = element.getBBox();
+		$doc.documentElement.removeChild(svg);
+		}
+		return bbox;
 	}-*/;
 
 }

@@ -58,4 +58,9 @@ public class MoveTo extends ClosePath {
 	public int getY() {
 		return y;
 	}
+
+	@Override
+	public String getSVGString() {
+		return isRelativeCoords() ? "m" : "M" + getX() + " " + getY();
+	}
 }

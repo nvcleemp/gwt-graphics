@@ -5,7 +5,9 @@ import java.util.List;
 
 import com.vaadin.contrib.gwtgraphics.client.Shape;
 import com.vaadin.contrib.gwtgraphics.client.VectorObject;
+import com.vaadin.contrib.gwtgraphics.client.shape.path.Arc;
 import com.vaadin.contrib.gwtgraphics.client.shape.path.ClosePath;
+import com.vaadin.contrib.gwtgraphics.client.shape.path.CurveTo;
 import com.vaadin.contrib.gwtgraphics.client.shape.path.LineTo;
 import com.vaadin.contrib.gwtgraphics.client.shape.path.MoveTo;
 import com.vaadin.contrib.gwtgraphics.client.shape.path.PathStep;
@@ -183,6 +185,48 @@ public class Path extends Shape {
 	 */
 	public void lineRelativelyTo(int x, int y) {
 		steps.add(new LineTo(true, x, y));
+		drawPath();
+	}
+
+	/**
+	 * Draws a cubic BŽzier curve.
+	 * 
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @param x
+	 * @param y
+	 */
+	public void curveTo(int x1, int y1, int x2, int y2, int x, int y) {
+		steps.add(new CurveTo(false, x1, y1, x2, y2, x, y));
+		drawPath();
+	}
+
+	/**
+	 * Draws a cubic BŽzier curve.
+	 * 
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @param x
+	 * @param y
+	 */
+	public void curveRelativelyTo(int x1, int y1, int x2, int y2, int x, int y) {
+		steps.add(new CurveTo(true, x1, y1, x2, y2, x, y));
+		drawPath();
+	}
+
+	public void arc(int rx, int ry, int xAxisRotation, boolean largeArc,
+			boolean sweep, int x, int y) {
+		steps.add(new Arc(false, rx, ry, xAxisRotation, largeArc, sweep, x, y));
+		drawPath();
+	}
+
+	public void arcRelatively(int rx, int ry, int xAxisRotation,
+			boolean largeArc, boolean sweep, int x, int y) {
+		steps.add(new Arc(true, rx, ry, xAxisRotation, largeArc, sweep, x, y));
 		drawPath();
 	}
 

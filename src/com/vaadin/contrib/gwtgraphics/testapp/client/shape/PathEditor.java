@@ -20,6 +20,8 @@ public class PathEditor extends ShapeEditor {
 
 	LineToEditor lineTo;
 
+	CurveToEditor curveTo;
+
 	public PathEditor(Shape vo, Metadata metadata, boolean newVo) {
 		super(vo, metadata, newVo);
 
@@ -30,6 +32,9 @@ public class PathEditor extends ShapeEditor {
 
 		lineTo = new LineToEditor();
 		addRow("Line", lineTo);
+
+		curveTo = new CurveToEditor();
+		addRow("Curve", curveTo);
 
 		close = new ClosePathEditor();
 		addRow("Close", close);
@@ -127,6 +132,71 @@ public class PathEditor extends ShapeEditor {
 			} else {
 				((Path) vo).lineTo(x, y);
 				code.addMethodCall(vo, "lineTo", x + ", " + y, false);
+			}
+		}
+	}
+
+	class CurveToEditor extends LineToEditor {
+
+		private TextBox x1Coord;
+
+		private TextBox y1Coord;
+
+		private TextBox x2Coord;
+
+		private TextBox y2Coord;
+
+		public CurveToEditor() {
+			x1Coord = new TextBox();
+			x1Coord.setVisibleLength(4);
+			x1Coord.setTitle("x1-coordinate");
+			insert(x1Coord, 2);
+
+			y1Coord = new TextBox();
+			y1Coord.setVisibleLength(4);
+			y1Coord.setTitle("y1-coordinate");
+			insert(y1Coord, 3);
+
+			x2Coord = new TextBox();
+			x2Coord.setVisibleLength(4);
+			x2Coord.setTitle("x2-coordinate");
+			insert(x2Coord, 4);
+
+			y2Coord = new TextBox();
+			y2Coord.setVisibleLength(4);
+			y2Coord.setTitle("y2-coordinate");
+			insert(y2Coord, 5);
+		}
+
+		@Override
+		protected void addStep(int x, int y) {
+			Integer x1 = null;
+			Integer y1 = null;
+			Integer x2 = null;
+			Integer y2 = null;
+			try {
+				x1 = Integer.parseInt(x1Coord.getText());
+				y1 = Integer.parseInt(y1Coord.getText());
+				x2 = Integer.parseInt(x2Coord.getText());
+				y2 = Integer.parseInt(y2Coord.getText());
+			} catch (NumberFormatException e) {
+			}
+			if (x1 != null && y1 != null && x2 != null && y2 != null) {
+				CodeView code = getCodeView();
+				x1Coord.setText("" + x1);
+				y1Coord.setText("" + y1);
+				x2Coord.setText("" + x2);
+				y2Coord.setText("" + y2);
+				if (relCoords.getValue()) {
+					((Path) vo).curveRelativelyTo(x1, y1, x2, y2, x, y);
+					code.addMethodCall(vo, "curveRelativelyTo", x1 + ", " + y1
+							+ ", " + x2 + ", " + y2 + ", " + x + ", " + y,
+							false);
+				} else {
+					((Path) vo).curveTo(x1, y1, x2, y2, x, y);
+					code.addMethodCall(vo, "curveTo", x1 + ", " + y1 + ", "
+							+ x2 + ", " + y2 + ", " + x + ", " + y, false);
+				}
 			}
 		}
 	}

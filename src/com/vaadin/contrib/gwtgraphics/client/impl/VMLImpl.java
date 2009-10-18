@@ -15,7 +15,9 @@ import com.vaadin.contrib.gwtgraphics.client.shape.Ellipse;
 import com.vaadin.contrib.gwtgraphics.client.shape.Path;
 import com.vaadin.contrib.gwtgraphics.client.shape.Rectangle;
 import com.vaadin.contrib.gwtgraphics.client.shape.Text;
+import com.vaadin.contrib.gwtgraphics.client.shape.path.Arc;
 import com.vaadin.contrib.gwtgraphics.client.shape.path.ClosePath;
+import com.vaadin.contrib.gwtgraphics.client.shape.path.CurveTo;
 import com.vaadin.contrib.gwtgraphics.client.shape.path.LineTo;
 import com.vaadin.contrib.gwtgraphics.client.shape.path.MoveTo;
 import com.vaadin.contrib.gwtgraphics.client.shape.path.PathStep;
@@ -57,7 +59,7 @@ public class VMLImpl extends SVGImpl {
 		container.appendChild(container2);
 
 		Element root = VMLUtil.createVMLElement("group");
-		setSize(root);
+		setDefaultSize(root);
 		container2.appendChild(root);
 		return root;
 	}
@@ -84,10 +86,10 @@ public class VMLImpl extends SVGImpl {
 			element = VMLUtil.createVMLElement("oval");
 		} else if (type == Path.class) {
 			element = VMLUtil.createVMLElement("shape");
-			setSize(element);
+			setDefaultSize(element);
 		} else if (type == Text.class) {
 			element = VMLUtil.createVMLElement("shape");
-			setSize(element);
+			setDefaultSize(element);
 
 			Element path = VMLUtil.createVMLElement("path");
 			path.setPropertyBoolean("textpathok", true);
@@ -104,7 +106,7 @@ public class VMLImpl extends SVGImpl {
 			element = VMLUtil.createVMLElement("line");
 		} else if (type == Group.class) {
 			element = VMLUtil.createVMLElement("group");
-			setSize(element);
+			setDefaultSize(element);
 		}
 		return element;
 	}
@@ -187,6 +189,9 @@ public class VMLImpl extends SVGImpl {
 		stroke.setPropertyBoolean("on", width > 0 ? true : false);
 		// store value for getter
 		element.setPropertyInt("_stroke-width", width);
+		if (isTextElement(element)) {
+			setTextSize(element);
+		}
 	}
 
 	@Override
@@ -290,6 +295,16 @@ public class VMLImpl extends SVGImpl {
 				LineTo lineTo = (LineTo) step;
 				path.append(lineTo.isRelativeCoords() ? " r" : " l").append(
 						lineTo.getX()).append(" ").append(lineTo.getY());
+			} else if (step.getClass() == CurveTo.class) {
+				CurveTo curve = (CurveTo) step;
+				path.append(curve.isRelativeCoords() ? " v" : " c");
+				path.append(curve.getX1()).append(" ").append(curve.getY1());
+				path.append(" ").append(curve.getX2()).append(" ").append(
+						curve.getY2());
+				path.append(" ").append(curve.getX()).append(" ").append(
+						curve.getY());
+			} else if (step.getClass() == Arc.class) {
+				// TODO
 			}
 
 			if (step instanceof MoveTo) {
@@ -303,7 +318,7 @@ public class VMLImpl extends SVGImpl {
 		element.setAttribute("path", path.toString());
 	}
 
-	private void setSize(Element element) {
+	private void setDefaultSize(Element element) {
 		setSize(element, 1, 1);
 	}
 
@@ -312,6 +327,26 @@ public class VMLImpl extends SVGImpl {
 		element.getStyle().setPropertyPx("height", height);
 		element.setPropertyString("coordorigin", "0 0");
 		element.setPropertyString("coordsize", width + " " + height);
+	}
+
+	private void setSize(Element element) {
+		if (element.getParentElement() == null) {
+			return;
+		}
+		int rotation = getRotation(element);
+		setRotation(element, 0);
+		setSize(element, element.getOffsetWidth(), element.getOffsetHeight());
+		setRotation(element, rotation);
+	}
+
+	private void setTextSize(Element element) {
+		if (element.getParentElement() == null) {
+			return;
+		}
+		int rotation = getRotation(element);
+		setRotation(element, 0);
+		setSize(element, element.getOffsetWidth(), 1);
+		setRotation(element, rotation);
 	}
 
 	private void setXY(Element element, int xy, boolean x) {
@@ -372,6 +407,7 @@ public class VMLImpl extends SVGImpl {
 	public void setText(Element element, String text) {
 		VMLUtil.getOrCreateChildElementWithTagName(element, "textpath")
 				.setPropertyString("string", text);
+		setTextSize(element);
 	}
 
 	@Override
@@ -402,6 +438,13 @@ public class VMLImpl extends SVGImpl {
 						"font",
 						element.getPropertyInt("_fontsize") + "px "
 								+ element.getPropertyString("_fontfamily"));
+		setTextSize(element);
+	}
+
+	private boolean isTextElement(Element element) {
+		return element.getTagName().equals("shape")
+				&& element.getFirstChildElement() != null
+				&& element.getFirstChildElement().getTagName().equals("path");
 	}
 
 	@Override
@@ -457,6 +500,9 @@ public class VMLImpl extends SVGImpl {
 	public void add(Element root, Element element) {
 		root.appendChild(element);
 		applyFillAndStroke(element);
+		if (isTextElement(element)) {
+			setTextSize(element);
+		}
 	}
 
 	private void applyFillAndStroke(Element element) {
