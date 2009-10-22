@@ -84,4 +84,18 @@ public class Group extends VectorObject implements VectorObjectContainer {
 			this.remove(vo);
 		}
 	}
+
+	@Override
+	protected void doAttachChildren() {
+		for (VectorObject vo : childrens) {
+			vo.onAttach();
+		}
+	}
+
+	@Override
+	protected void doDetachChildren() {
+		for (VectorObject vo : childrens) {
+			vo.onDetach();
+		}
+	}
 }

@@ -172,4 +172,14 @@ public abstract class VectorObject extends Widget implements HasClickHandlers,
 	public HandlerRegistration addMouseWheelHandler(MouseWheelHandler handler) {
 		return addDomHandler(handler, MouseWheelEvent.getType());
 	}
+
+	@Override
+	protected void onAttach() {
+		super.onAttach();
+	}
+
+	@Override
+	protected void onDetach() {
+		super.onDetach();
+	}
 }

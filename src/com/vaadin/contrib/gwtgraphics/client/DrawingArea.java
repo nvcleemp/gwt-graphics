@@ -285,4 +285,18 @@ public class DrawingArea extends Widget implements VectorObjectContainer,
 	public HandlerRegistration addMouseWheelHandler(MouseWheelHandler handler) {
 		return addDomHandler(handler, MouseWheelEvent.getType());
 	}
+
+	@Override
+	protected void doAttachChildren() {
+		for (VectorObject vo : childrens) {
+			vo.onAttach();
+		}
+	}
+
+	@Override
+	protected void doDetachChildren() {
+		for (VectorObject vo : childrens) {
+			vo.onDetach();
+		}
+	}
 }
