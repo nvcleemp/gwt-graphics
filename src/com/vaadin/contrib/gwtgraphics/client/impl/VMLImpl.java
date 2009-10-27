@@ -208,42 +208,43 @@ public class VMLImpl extends SVGImpl {
 
 	@Override
 	public int getWidth(Element element) {
-		Element el = element;
 		if (element.getTagName().equals("group")) {
 			// DrawingArea's root element
-			el = element.getParentElement();
+			element = element.getParentElement();
 		}
-		return NumberUtil.parseIntValue(el.getStyle().getProperty("width"), 0);
+		return NumberUtil.parseIntValue(
+				element.getStyle().getProperty("width"), 0);
 	}
 
 	@Override
 	public void setWidth(Element element, int width) {
-		Element el = element;
 		if (element.getTagName().equals("group")) {
 			// DrawingArea's root element
-			el = element.getParentElement();
+			element = element.getParentElement();
+			element.getParentElement().getStyle().setPropertyPx("width", width);
 		}
-		el.getStyle().setPropertyPx("width", width);
+		element.getStyle().setPropertyPx("width", width);
 	}
 
 	@Override
 	public int getHeight(Element element) {
-		Element el = element;
 		if (element.getTagName().equals("group")) {
 			// DrawingArea's root element
-			el = element.getParentElement();
+			element = element.getParentElement();
 		}
-		return NumberUtil.parseIntValue(el.getStyle().getProperty("height"), 0);
+		return NumberUtil.parseIntValue(element.getStyle()
+				.getProperty("height"), 0);
 	}
 
 	@Override
 	public void setHeight(Element element, int height) {
-		Element el = element;
 		if (element.getTagName().equals("group")) {
 			// DrawingArea's root element
-			el = element.getParentElement();
+			element = element.getParentElement();
+			element.getParentElement().getStyle().setPropertyPx("height",
+					height);
 		}
-		el.getStyle().setPropertyPx("height", height);
+		element.getStyle().setPropertyPx("height", height);
 	}
 
 	@Override

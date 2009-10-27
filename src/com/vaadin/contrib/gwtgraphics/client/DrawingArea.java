@@ -191,18 +191,56 @@ public class DrawingArea extends Widget implements VectorObjectContainer,
 		getImpl().setHeight(root, height);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.google.gwt.user.client.ui.UIObject#setHeight(java.lang.String)
+	 */
 	@Override
 	public void setHeight(String height) {
-		throw new UnsupportedOperationException(
-				"Use the setHeight(int height) method.");
+		boolean successful = false;
+		if (height != null && height.endsWith("px")) {
+			try {
+				setHeight(Integer.parseInt(height.substring(0,
+						height.length() - 2)));
+				successful = true;
+			} catch (NumberFormatException e) {
+			}
+		}
+		if (!successful) {
+			throw new IllegalArgumentException(
+					"Only pixel units (px) are supported");
+		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.google.gwt.user.client.ui.UIObject#setWidth(java.lang.String)
+	 */
 	@Override
 	public void setWidth(String width) {
-		throw new UnsupportedOperationException(
-				"Use the setWidth(int width) method.");
+		boolean successful = false;
+		if (width != null && width.endsWith("px")) {
+			try {
+				setWidth(Integer.parseInt(width
+						.substring(0, width.length() - 2)));
+				successful = true;
+			} catch (NumberFormatException e) {
+			}
+		}
+		if (!successful) {
+			throw new IllegalArgumentException(
+					"Only pixel units (px) are supported");
+		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.google.gwt.user.client.ui.UIObject#setStyleName(java.lang.String)
+	 */
 	@Override
 	public void setStyleName(String style) {
 		getElement().setClassName(
@@ -286,6 +324,11 @@ public class DrawingArea extends Widget implements VectorObjectContainer,
 		return addDomHandler(handler, MouseWheelEvent.getType());
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.google.gwt.user.client.ui.Widget#doAttachChildren()
+	 */
 	@Override
 	protected void doAttachChildren() {
 		for (VectorObject vo : childrens) {
@@ -293,6 +336,11 @@ public class DrawingArea extends Widget implements VectorObjectContainer,
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.google.gwt.user.client.ui.Widget#doDetachChildren()
+	 */
 	@Override
 	protected void doDetachChildren() {
 		for (VectorObject vo : childrens) {
