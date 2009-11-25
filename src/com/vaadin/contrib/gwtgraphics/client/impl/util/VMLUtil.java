@@ -2,6 +2,7 @@ package com.vaadin.contrib.gwtgraphics.client.impl.util;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.NodeList;
 
 /**
@@ -25,19 +26,37 @@ public abstract class VMLUtil {
 
 	public static Element getOrCreateChildElementWithTagName(Element element,
 			String name) {
-		NodeList<Element> els = element.getElementsByTagName(name);
-		if (els.getLength() > 0) {
-			return els.getItem(0);
+		Element e = getChildElementWithTagName(element, name);
+		if (e != null) {
+			return e;
 		}
 		return element.appendChild(createVMLElement(name));
 	}
 
 	public static String getPropertyOfFirstChildElementWithTagName(
 			Element element, String name, String attr) {
-		NodeList<Element> els = element.getElementsByTagName(name);
-		if (els.getLength() > 0) {
-			return els.getItem(0).getPropertyString(attr);
+		Element e = getChildElementWithTagName(element, name);
+		if (e != null) {
+			return e.getPropertyString(attr);
 		}
 		return "";
+	}
+
+	public static boolean hasChildElementWithTagName(Element element,
+			String name) {
+		Element e = getChildElementWithTagName(element, name);
+		return e != null;
+	}
+
+	private static Element getChildElementWithTagName(Element element,
+			String name) {
+		NodeList<Node> nodes = element.getChildNodes();
+		for (int i = 0; i < nodes.getLength(); i++) {
+			Node node = nodes.getItem(i);
+			if (node.getNodeName().equals(name)) {
+				return Element.as(node);
+			}
+		}
+		return null;
 	}
 }

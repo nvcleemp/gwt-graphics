@@ -173,11 +173,21 @@ public abstract class VectorObject extends Widget implements HasClickHandlers,
 		return addDomHandler(handler, MouseWheelEvent.getType());
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.google.gwt.user.client.ui.Widget#onAttach()
+	 */
 	@Override
 	protected void onAttach() {
 		super.onAttach();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.google.gwt.user.client.ui.Widget#onDetach()
+	 */
 	@Override
 	protected void onDetach() {
 		super.onDetach();

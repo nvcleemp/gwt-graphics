@@ -85,6 +85,32 @@ public class Group extends VectorObject implements VectorObjectContainer {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.vaadin.contrib.gwtgraphics.client.VectorObjectContainer#getVectorObject
+	 * (int)
+	 */
+	public VectorObject getVectorObject(int index) {
+		return childrens.get(index);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seecom.vaadin.contrib.gwtgraphics.client.VectorObjectContainer#
+	 * getVectorObjectCount()
+	 */
+	public int getVectorObjectCount() {
+		return childrens.size();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.google.gwt.user.client.ui.Widget#doAttachChildren()
+	 */
 	@Override
 	protected void doAttachChildren() {
 		for (VectorObject vo : childrens) {
@@ -92,6 +118,11 @@ public class Group extends VectorObject implements VectorObjectContainer {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.google.gwt.user.client.ui.Widget#doDetachChildren()
+	 */
 	@Override
 	protected void doDetachChildren() {
 		for (VectorObject vo : childrens) {

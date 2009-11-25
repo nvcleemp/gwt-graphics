@@ -44,4 +44,20 @@ public interface VectorObjectContainer {
 	 */
 	public abstract void clear();
 
+	/**
+	 * Returns the number of VectorObjects in this VectorObjectContainer.
+	 * 
+	 * @return the number of VectorObjects in this VectorObjectContainer.
+	 */
+	public abstract int getVectorObjectCount();
+
+	/**
+	 * Returns the VectorObject element at the specified position.
+	 * 
+	 * @param index
+	 *            index of element to return.
+	 * @return the VectorObject element at the specified position.
+	 */
+	public abstract VectorObject getVectorObject(int index);
+
 }

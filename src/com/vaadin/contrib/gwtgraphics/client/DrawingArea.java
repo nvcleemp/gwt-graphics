@@ -153,6 +153,27 @@ public class DrawingArea extends Widget implements VectorObjectContainer,
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.vaadin.contrib.gwtgraphics.client.VectorObjectContainer#getVectorObject
+	 * (int)
+	 */
+	public VectorObject getVectorObject(int index) {
+		return childrens.get(index);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seecom.vaadin.contrib.gwtgraphics.client.VectorObjectContainer#
+	 * getVectorObjectCount()
+	 */
+	public int getVectorObjectCount() {
+		return childrens.size();
+	}
+
 	/**
 	 * Returns the width of the DrawingArea in pixels.
 	 * 

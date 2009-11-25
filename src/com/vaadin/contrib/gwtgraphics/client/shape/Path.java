@@ -137,6 +137,26 @@ public class Path extends Shape {
 	}
 
 	/**
+	 * Returns the number of PathSteps in this Path.
+	 * 
+	 * @return the number of PathSteps in this Path.
+	 */
+	public int getStepCount() {
+		return steps.size();
+	}
+
+	/**
+	 * Returns the PathStep element at the specified position.
+	 * 
+	 * @param index
+	 *            index of element to return.
+	 * @return the PathStep element at the specified position.
+	 */
+	public PathStep getStep(int index) {
+		return steps.get(index);
+	}
+
+	/**
 	 * Start a new sub-path at the given absolute point.
 	 * 
 	 * @param x

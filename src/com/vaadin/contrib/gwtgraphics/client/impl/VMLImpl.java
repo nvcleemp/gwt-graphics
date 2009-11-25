@@ -507,11 +507,11 @@ public class VMLImpl extends SVGImpl {
 	}
 
 	private void applyFillAndStroke(Element element) {
-		if (element.getElementsByTagName("fill").getLength() > 0) {
+		if (VMLUtil.hasChildElementWithTagName(element, "fill")) {
 			setFillColor(element, getFillColor(element));
 			setFillOpacity(element, getFillOpacity(element));
 		}
-		if (element.getElementsByTagName("stroke").getLength() > 0) {
+		if (VMLUtil.hasChildElementWithTagName(element, "stroke")) {
 			setStrokeColor(element, getStrokeColor(element));
 			setStrokeOpacity(element, getStrokeOpacity(element));
 			setStrokeWidth(element, getStrokeWidth(element));
