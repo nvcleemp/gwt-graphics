@@ -98,7 +98,7 @@ public class VMLImpl extends SVGImpl {
 
 			Element textpath = VMLUtil.createVMLElement("textpath");
 			textpath.setPropertyBoolean("on", true);
-			textpath.getStyle().setProperty("v-text-align", "left");
+			// textpath.getStyle().setProperty("v-text-align", "left");
 			element.appendChild(textpath);
 		} else if (type == Image.class) {
 			element = VMLUtil.createVMLElement("image");
