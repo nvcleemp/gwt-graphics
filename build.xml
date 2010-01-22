@@ -23,7 +23,15 @@
   </target>
 
   <target name="package" depends="compile" description="Package up the project as a jar">
-    <jar destfile="${build.dir}/gwt-graphics-${version}.jar">
+  	<delete file="MANIFEST.MF"/>
+  	<manifest file="MANIFEST.MF">
+      <attribute name="Manifest-Version" value="1.0"/>
+  	  <attribute name="Implementation-Title" value="GWT Graphics"/>
+  	  <attribute name="Vaadin-Package-Version" value="1"/>
+  	  <attribute name="Implementation-Version" value="${version}"/>
+  	  <attribute name="Implementation-Vendor" value="Henri Kerola / IT Mill Ltd"/>
+  	</manifest>
+    <jar destfile="${build.dir}/gwt-graphics-${version}.jar" manifest="MANIFEST.MF">
       <fileset dir="bin">
         <include name="**/*.class"/>
       </fileset>
