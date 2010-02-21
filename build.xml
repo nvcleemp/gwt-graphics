@@ -17,7 +17,7 @@
 
   <target name="compile" description="Compile src to bin">
     <mkdir dir="bin"/>
-    <javac srcdir="src" destdir="bin" includes="**" excludes="**/com/vaadin/contrib/gwtgraphics/testapp/**" debug="on" debuglevel="lines,vars,source" source="1.5">
+    <javac srcdir="src" destdir="bin" includes="**" excludes="**/org/vaadin/gwtgraphics/testapp/**" debug="on" debuglevel="lines,vars,source" source="1.5">
       <classpath refid="project.class.path"/>
     </javac>
   </target>
@@ -36,7 +36,7 @@
         <include name="**/*.class"/>
       </fileset>
       <!-- Get everything; source, modules, html files -->
-      <fileset dir="src" excludes="**/com/vaadin/contrib/gwtgraphics/testapp/**"/>
+      <fileset dir="src" excludes="**/org/vaadin/gwtgraphics/testapp/**"/>
     </jar>
   </target>
   
@@ -56,7 +56,7 @@
   </target>
   
    <target name="javadoc">
-        <javadoc access="public" author="true" classpath="/Applications/eclipse35/plugins/com.google.gwt.eclipse.sdkbundle.macosx_1.7.0.v200907291526/gwt-mac-1.7.0/gwt-dev-mac.jar:/Applications/eclipse35/plugins/com.google.gwt.eclipse.sdkbundle.macosx_1.7.0.v200907291526/gwt-mac-1.7.0/gwt-user.jar" destdir="javadocs" doctitle="GWT Graphics" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="com.vaadin.contrib.gwtgraphics.client.shape.path,com.vaadin.contrib.gwtgraphics.client.shape,com.vaadin.contrib.gwtgraphics.client,com.vaadin.contrib.gwtgraphics.client.animation" source="1.5" sourcepath="src" splitindex="true" use="true" version="true"/>
+        <javadoc access="public" author="true" classpath="/Applications/eclipse35/plugins/com.google.gwt.eclipse.sdkbundle.macosx_1.7.0.v200907291526/gwt-mac-1.7.0/gwt-dev-mac.jar:/Applications/eclipse35/plugins/com.google.gwt.eclipse.sdkbundle.macosx_1.7.0.v200907291526/gwt-mac-1.7.0/gwt-user.jar" destdir="javadocs" doctitle="GWT Graphics" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="org.vaadin.gwtgraphics.vaadin.contrib.gwtgraphics.client.shape.path,org.vaadin.gwtgraphics.client.shape,org.vaadin.gwtgraphics.client,org.vaadin.gwtgraphics.client.animation" source="1.5" sourcepath="src" splitindex="true" use="true" version="true"/>
     </target>
 
   <target name="all" depends="package,package-testapp-war,javadoc"/>
