@@ -64,6 +64,7 @@ public class SVGImpl {
 			element = SVGUtil.createSVGElementNS("path");
 		} else if (type == Text.class) {
 			element = SVGUtil.createSVGElementNS("text");
+			element.setAttribute("text-anchor", "start");
 		} else if (type == Image.class) {
 			element = SVGUtil.createSVGElementNS("image");
 			// Let aspect ration behave like VML's image does

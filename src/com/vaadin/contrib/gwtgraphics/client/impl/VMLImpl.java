@@ -348,6 +348,8 @@ public class VMLImpl extends SVGImpl {
 		setRotation(element, 0);
 		setSize(element, element.getOffsetWidth(), 1);
 		setRotation(element, rotation);
+		setX(element, getX(element));
+		setY(element, getY(element));
 	}
 
 	private void setXY(Element element, int xy, boolean x) {
@@ -362,7 +364,13 @@ public class VMLImpl extends SVGImpl {
 				setLineFromTo(element, null, xy, true);
 			}
 		} else {
-			if (tagName.equals("oval")) {
+			if (isTextElement(element)) {
+				if (x) {
+					xy += (element.getOffsetWidth() / 2) - 1;
+				} else {
+					xy -= (element.getOffsetHeight() / 2) - 1;
+				}
+			} else if (tagName.equals("oval")) {
 				xy = xy
 						- NumberUtil.parseIntValue(element.getStyle()
 								.getProperty(x ? "width" : "height"), 0) / 2;
