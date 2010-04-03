@@ -29,10 +29,15 @@ public class ImageEditor extends VectorObjectEditor {
 		addRow("Animation", animatableEditor);
 
 		xCoord = addTextBoxRow("X", 3);
+		xCoord.getElement().setId("x-coord");
 		yCoord = addTextBoxRow("Y", 3);
+		yCoord.getElement().setId("y-coord");
 		width = addTextBoxRow("Width", 8);
+		width.getElement().setId("width");
 		height = addTextBoxRow("Height", 8);
+		height.getElement().setId("height");
 		href = addTextBoxRow("Href", 8);
+		href.getElement().setId("href");
 
 		if (vo != null) {
 			xCoord.setText("" + vo.getX());

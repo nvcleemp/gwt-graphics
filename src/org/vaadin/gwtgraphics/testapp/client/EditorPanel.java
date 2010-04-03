@@ -64,6 +64,7 @@ public class EditorPanel extends VerticalPanel implements ChangeHandler,
 		add(type);
 
 		vectorObjectList = new ListBox();
+		vectorObjectList.getElement().setId("vo-list");
 		metadata.updateVectorObjectListBox(vectorObjectList, null);
 		vectorObjectList.addChangeHandler(this);
 		add(vectorObjectList);

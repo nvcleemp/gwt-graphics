@@ -34,28 +34,33 @@ public class AnimatableEditor extends VerticalPanel implements ClickHandler {
 		panel.setVerticalAlignment(ALIGN_MIDDLE);
 
 		propertyList = new ListBox();
+		propertyList.getElement().setId("animation-property-list");
 		panel.add(propertyList);
 		panel.add(new Label(": "));
 
 		startValue = new TextBox();
+		startValue.getElement().setId("animation-start-value");
 		startValue.setTitle("Start value");
 		startValue.setVisibleLength(3);
 		panel.add(startValue);
 		panel.add(new Label(" -> "));
 
 		endValue = new TextBox();
+		endValue.getElement().setId("animation-end-value");
 		endValue.setTitle("End value");
 		endValue.setVisibleLength(3);
 		panel.add(endValue);
 		panel.add(new Label(" in "));
 
 		durationValue = new TextBox();
+		durationValue.getElement().setId("animation-duration");
 		durationValue.setTitle("Duration");
 		durationValue.setVisibleLength(5);
 		panel.add(durationValue);
 		panel.add(new Label(" ms"));
 
 		addButton = new Button("Add");
+		addButton.getElement().setId("animation-add");
 		addButton.addClickHandler(this);
 		panel.add(addButton);
 
@@ -101,6 +106,7 @@ public class AnimatableEditor extends VerticalPanel implements ClickHandler {
 				+ animate.getStartValue() + " -> " + animate.getEndValue()
 				+ " in " + animate.getDuration() + " ms"));
 		Button startButton = new Button("Start");
+		startButton.getElement().setId("animation-start-button");
 		panel.add(startButton);
 		startButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -109,6 +115,7 @@ public class AnimatableEditor extends VerticalPanel implements ClickHandler {
 		});
 
 		Button stopButton = new Button("Stop");
+		stopButton.getElement().setId("animation-stop-button");
 		panel.add(stopButton);
 		stopButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {

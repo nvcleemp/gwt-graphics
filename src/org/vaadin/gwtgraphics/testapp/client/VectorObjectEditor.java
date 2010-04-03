@@ -29,8 +29,10 @@ public class VectorObjectEditor extends FlexTable implements ChangeHandler {
 		this.newVo = newVo;
 
 		rotation = addTextBoxRow("Rotation", 8);
+		rotation.getElement().setId("rotation");
 
 		parentList = metadata.getParentListBox(vo.getParent());
+		parentList.getElement().setId("parent-list");
 		addRow("Parent", parentList);
 
 		parentList.addChangeHandler(this);

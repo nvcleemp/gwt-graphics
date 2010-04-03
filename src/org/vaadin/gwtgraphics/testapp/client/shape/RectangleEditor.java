@@ -24,8 +24,11 @@ public class RectangleEditor extends ShapeEditor {
 				"roundedcorners" });
 
 		width = addTextBoxRow("Width", 8);
+		width.getElement().setId("width");
 		height = addTextBoxRow("Height", 8);
+		height.getElement().setId("height");
 		roundedCorners = addTextBoxRow("Rounded corners", 8);
+		roundedCorners.getElement().setId("rounded-corners");
 
 		if (vo != null) {
 			width.setText("" + vo.getWidth());
