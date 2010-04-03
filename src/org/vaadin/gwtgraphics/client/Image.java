@@ -54,7 +54,7 @@ public class Image extends VectorObject implements Positionable, Animatable {
 	 * @see org.vaadin.gwtgraphics.client.Positionable#setX(int)
 	 */
 	public void setX(int x) {
-		getImpl().setX(getElement(), x);
+		getImpl().setX(getElement(), x, isAttached());
 	}
 
 	/*
@@ -72,7 +72,7 @@ public class Image extends VectorObject implements Positionable, Animatable {
 	 * @see org.vaadin.gwtgraphics.client.Positionable#setY(int)
 	 */
 	public void setY(int y) {
-		getImpl().setY(getElement(), y);
+		getImpl().setY(getElement(), y, isAttached());
 	}
 
 	/**

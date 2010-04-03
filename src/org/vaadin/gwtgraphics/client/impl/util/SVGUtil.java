@@ -40,17 +40,22 @@ public abstract class SVGUtil {
 		element.className.baseVal = name;
 	}-*/;
 
-	public static native SVGBBox getBBBox(Element element) /*-{
+	public static native SVGBBox getBBBox(Element element, boolean attached)
+	/*-{
 		var bbox = null;
-		if (element.parentNode) {
-		bbox = element.getBBox();
+		if (attached) {
+			bbox = element.getBBox();
 		} else {
-		var ns = @org.vaadin.gwtgraphics.client.impl.util.SVGUtil::SVG_NS;
-		var svg = $doc.createElementNS(ns, "svg");
-		svg.appendChild(element);
-		$doc.documentElement.appendChild(svg);
-		bbox = element.getBBox();
-		$doc.documentElement.removeChild(svg);
+			var ns = @org.vaadin.gwtgraphics.client.impl.util.SVGUtil::SVG_NS;
+			var svg = $doc.createElementNS(ns, "svg");
+			var parent = element.parentNode;
+			svg.appendChild(element);
+			$doc.documentElement.appendChild(svg);
+			bbox = element.getBBox();
+			$doc.documentElement.removeChild(svg);
+			if (parent != null) {
+				parent.appendChild(element);
+			}
 		}
 		return bbox;
 	}-*/;

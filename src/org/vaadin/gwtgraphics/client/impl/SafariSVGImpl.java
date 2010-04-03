@@ -12,8 +12,8 @@ import com.google.gwt.dom.client.Element;
 public class SafariSVGImpl extends SVGImpl {
 
 	@Override
-	public void setX(Element element, int x) {
-		super.setX(element, x);
+	public void setX(Element element, int x, boolean attached) {
+		super.setX(element, x, attached);
 		if (element.getTagName().equals("text")) {
 			// When a text element is already added to the document's DOM tree,
 			// for some reason element's position doesn't update without setting
@@ -23,8 +23,8 @@ public class SafariSVGImpl extends SVGImpl {
 	}
 
 	@Override
-	public void setY(Element element, int y) {
-		super.setY(element, y);
+	public void setY(Element element, int y, boolean attached) {
+		super.setY(element, y, attached);
 		if (element.getTagName().equals("text")) {
 			// When a text element is already added to the document's DOM tree,
 			// for some reason element's position doesn't update without setting
@@ -38,7 +38,7 @@ public class SafariSVGImpl extends SVGImpl {
 		super.setRectangleRoundedCorners(element, radius);
 		// Set some other attribute to make Safari round the corners
 		// immediately.
-		setX(element, getX(element));
+		setWidth(element, getWidth(element));
 	}
 
 }

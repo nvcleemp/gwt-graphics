@@ -84,8 +84,8 @@ public class SVGImpl {
 				getPosAttribute(element, true), 0);
 	}
 
-	public void setX(Element element, int x) {
-		SVGUtil.setAttributeNS(element, getPosAttribute(element, true), x);
+	public void setX(final Element element, final int x, final boolean attached) {
+		setXY(element, true, x, attached);
 	}
 
 	public int getY(Element element) {
@@ -93,9 +93,24 @@ public class SVGImpl {
 				getPosAttribute(element, false), 0);
 	}
 
-	public void setY(Element element, int y) {
-		SVGUtil.setAttributeNS(element, getPosAttribute(element, false), y);
+	public void setY(final Element element, final int y, final boolean attached) {
+		setXY(element, false, y, attached);
+	}
 
+	private void setXY(final Element element, boolean x, final int value,
+			final boolean attached) {
+		final int rotation = getRotation(element);
+		final String posAttr = getPosAttribute(element, x);
+		SVGUtil.setAttributeNS(element, posAttr, value);
+		if (rotation != 0) {
+			DeferredCommand.addCommand(new Command() {
+				public void execute() {
+					SVGUtil.setAttributeNS(element, "transform", "");
+					SVGUtil.setAttributeNS(element, posAttr, value);
+					setRotateTransform(element, rotation, attached);
+				}
+			});
+		}
 	}
 
 	private String getPosAttribute(Element element, boolean x) {
@@ -325,7 +340,8 @@ public class SVGImpl {
 		SVGUtil.setClassName(element, name + "-" + getStyleSuffix());
 	}
 
-	public void setRotation(final Element element, final int degree) {
+	public void setRotation(final Element element, final int degree,
+			final boolean attached) {
 		element.setPropertyInt("_rotation", degree);
 		if (degree == 0) {
 			SVGUtil.setAttributeNS(element, "transform", "");
@@ -333,13 +349,18 @@ public class SVGImpl {
 		}
 		DeferredCommand.addCommand(new Command() {
 			public void execute() {
-				SVGBBox box = SVGUtil.getBBBox(element);
-				int x = box.getX() + box.getWidth() / 2;
-				int y = box.getY() + box.getHeight() / 2;
-				SVGUtil.setAttributeNS(element, "transform", "rotate(" + degree
-						+ " " + x + " " + y + ")");
+				setRotateTransform(element, degree, attached);
 			}
 		});
+	}
+
+	private void setRotateTransform(Element element, int degree,
+			boolean attached) {
+		SVGBBox box = SVGUtil.getBBBox(element, attached);
+		int x = box.getX() + box.getWidth() / 2;
+		int y = box.getY() + box.getHeight() / 2;
+		SVGUtil.setAttributeNS(element, "transform", "rotate(" + degree + " "
+				+ x + " " + y + ")");
 	}
 
 	public int getRotation(Element element) {

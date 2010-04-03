@@ -51,7 +51,7 @@ public abstract class Shape extends VectorObject implements Strokeable,
 	 * @see org.vaadin.gwtgraphics.client.Positionable#setX(int)
 	 */
 	public void setX(int x) {
-		getImpl().setX(getElement(), x);
+		getImpl().setX(getElement(), x, isAttached());
 	}
 
 	/*
@@ -64,7 +64,7 @@ public abstract class Shape extends VectorObject implements Strokeable,
 	}
 
 	public void setY(int y) {
-		getImpl().setY(getElement(), y);
+		getImpl().setY(getElement(), y, isAttached());
 	}
 
 	/**

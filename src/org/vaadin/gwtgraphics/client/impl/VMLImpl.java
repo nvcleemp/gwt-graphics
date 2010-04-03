@@ -118,8 +118,12 @@ public class VMLImpl extends SVGImpl {
 	}
 
 	@Override
-	public void setX(Element element, int x) {
+	public void setX(Element element, int x, boolean attached) {
 		setXY(element, x, true);
+	}
+
+	private void setX(Element element, int x) {
+		setX(element, x, false);
 	}
 
 	@Override
@@ -128,8 +132,12 @@ public class VMLImpl extends SVGImpl {
 	}
 
 	@Override
-	public void setY(Element element, int y) {
+	public void setY(Element element, int y, boolean attached) {
 		setXY(element, y, false);
+	}
+
+	private void setY(Element element, int y) {
+		setY(element, y, false);
 	}
 
 	@Override
@@ -336,19 +344,19 @@ public class VMLImpl extends SVGImpl {
 			return;
 		}
 		int rotation = getRotation(element);
-		setRotation(element, 0);
+		setRotation(element, 0, false);
 		setSize(element, element.getOffsetWidth(), element.getOffsetHeight());
-		setRotation(element, rotation);
+		setRotation(element, rotation, false);
 	}
 
 	private void setTextSize(Element element) {
-		if (element.getParentElement() == null) {
-			return;
-		}
-		int rotation = getRotation(element);
-		setRotation(element, 0);
-		setSize(element, element.getOffsetWidth(), 1);
-		setRotation(element, rotation);
+		// if (element.getParentElement() == null) {
+		// return;
+		// }
+		// int rotation = getRotation(element);
+		// setRotation(element, 0);
+		// setSize(element, 1, 1);
+		// setRotation(element, rotation);
 		setX(element, getX(element));
 		setY(element, getY(element));
 	}
@@ -551,7 +559,7 @@ public class VMLImpl extends SVGImpl {
 	}
 
 	@Override
-	public void setRotation(Element element, int degree) {
+	public void setRotation(Element element, int degree, boolean attached) {
 		element.getStyle().setPropertyPx("rotation", degree);
 	}
 

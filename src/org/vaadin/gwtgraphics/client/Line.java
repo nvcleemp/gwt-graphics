@@ -55,7 +55,7 @@ public class Line extends VectorObject implements Strokeable, Animatable {
 	 *            the new x-coordinate in pixels
 	 */
 	public void setX1(int x1) {
-		getImpl().setX(getElement(), x1);
+		getImpl().setX(getElement(), x1, isAttached());
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class Line extends VectorObject implements Strokeable, Animatable {
 	 *            the new y-coordinate in pixels
 	 */
 	public void setY1(int y1) {
-		getImpl().setY(getElement(), y1);
+		getImpl().setY(getElement(), y1, isAttached());
 	}
 
 	/**

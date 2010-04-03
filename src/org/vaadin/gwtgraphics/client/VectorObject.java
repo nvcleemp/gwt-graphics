@@ -49,7 +49,7 @@ public abstract class VectorObject extends Widget implements HasClickHandlers,
 	}
 
 	public void setRotation(int degree) {
-		getImpl().setRotation(getElement(), degree);
+		getImpl().setRotation(getElement(), degree, isAttached());
 	}
 
 	public Widget getParent() {
