@@ -22,6 +22,8 @@ import org.vaadin.gwtgraphics.client.shape.path.PathStep;
 
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.DeferredCommand;
 
 /**
  * This class contains the VML implementation module of GWT Graphics.
@@ -119,11 +121,7 @@ public class VMLImpl extends SVGImpl {
 
 	@Override
 	public void setX(Element element, int x, boolean attached) {
-		setXY(element, x, true);
-	}
-
-	private void setX(Element element, int x) {
-		setX(element, x, false);
+		setXY(element, x, true, attached);
 	}
 
 	@Override
@@ -133,11 +131,7 @@ public class VMLImpl extends SVGImpl {
 
 	@Override
 	public void setY(Element element, int y, boolean attached) {
-		setXY(element, y, false);
-	}
-
-	private void setY(Element element, int y) {
-		setY(element, y, false);
+		setXY(element, y, false, attached);
 	}
 
 	@Override
@@ -191,7 +185,7 @@ public class VMLImpl extends SVGImpl {
 	}
 
 	@Override
-	public void setStrokeWidth(Element element, int width) {
+	public void setStrokeWidth(Element element, int width, boolean attached) {
 		Element stroke = VMLUtil.getOrCreateChildElementWithTagName(element,
 				"stroke");
 		stroke.setPropertyString("weight", width + "px");
@@ -199,7 +193,7 @@ public class VMLImpl extends SVGImpl {
 		// store value for getter
 		element.setPropertyInt("_stroke-width", width);
 		if (isTextElement(element)) {
-			setTextSize(element);
+			fixTextPosition(element, attached);
 		}
 	}
 
@@ -275,7 +269,7 @@ public class VMLImpl extends SVGImpl {
 	@Override
 	public void setEllipseRadiusX(Element element, int radiusX) {
 		setWidth(element, 2 * radiusX);
-		setX(element, getX(element));
+		setX(element, getX(element), false);
 	}
 
 	@Override
@@ -286,7 +280,7 @@ public class VMLImpl extends SVGImpl {
 	@Override
 	public void setEllipseRadiusY(Element element, int radiusY) {
 		setHeight(element, 2 * radiusY);
-		setY(element, getY(element));
+		setY(element, getY(element), false);
 	}
 
 	@Override
@@ -339,29 +333,21 @@ public class VMLImpl extends SVGImpl {
 		element.setPropertyString("coordsize", width + " " + height);
 	}
 
-	private void setSize(Element element) {
-		if (element.getParentElement() == null) {
+	private void fixTextPosition(final Element element, final boolean attached) {
+		if (!attached) {
 			return;
 		}
-		int rotation = getRotation(element);
-		setRotation(element, 0, false);
-		setSize(element, element.getOffsetWidth(), element.getOffsetHeight());
-		setRotation(element, rotation, false);
+		element.getStyle().setProperty("visibility", "hidden");
+		DeferredCommand.addCommand(new Command() {
+			public void execute() {
+				setX(element, getX(element), attached);
+				setY(element, getY(element), attached);
+				element.getStyle().setProperty("visibility", "visible");
+			}
+		});
 	}
 
-	private void setTextSize(Element element) {
-		// if (element.getParentElement() == null) {
-		// return;
-		// }
-		// int rotation = getRotation(element);
-		// setRotation(element, 0);
-		// setSize(element, 1, 1);
-		// setRotation(element, rotation);
-		setX(element, getX(element));
-		setY(element, getY(element));
-	}
-
-	private void setXY(Element element, int xy, boolean x) {
+	private void setXY(Element element, int xy, boolean x, boolean attached) {
 		// Save value for getter
 		element.setPropertyInt(x ? "_x" : "_y", xy);
 
@@ -374,11 +360,14 @@ public class VMLImpl extends SVGImpl {
 			}
 		} else {
 			if (isTextElement(element)) {
+				int rot = getRotation(element);
+				setRotation(element, 0, attached);
 				if (x) {
 					xy += (element.getOffsetWidth() / 2) - 1;
 				} else {
 					xy -= (element.getOffsetHeight() / 2) - 1;
 				}
+				setRotation(element, rot, attached);
 			} else if (tagName.equals("oval")) {
 				xy = xy
 						- NumberUtil.parseIntValue(element.getStyle()
@@ -422,10 +411,10 @@ public class VMLImpl extends SVGImpl {
 	}
 
 	@Override
-	public void setText(Element element, String text) {
+	public void setText(Element element, String text, boolean attached) {
 		VMLUtil.getOrCreateChildElementWithTagName(element, "textpath")
 				.setPropertyString("string", text);
-		setTextSize(element);
+		fixTextPosition(element, attached);
 	}
 
 	@Override
@@ -434,9 +423,10 @@ public class VMLImpl extends SVGImpl {
 	}
 
 	@Override
-	public void setTextFontFamily(Element element, String family) {
+	public void setTextFontFamily(Element element, String family,
+			boolean attached) {
 		element.setPropertyString("_fontfamily", family);
-		setTextFont(element);
+		setTextFont(element, attached);
 	}
 
 	@Override
@@ -445,18 +435,18 @@ public class VMLImpl extends SVGImpl {
 	}
 
 	@Override
-	public void setTextFontSize(Element element, int size) {
+	public void setTextFontSize(Element element, int size, boolean attached) {
 		element.setPropertyInt("_fontsize", size);
-		setTextFont(element);
+		setTextFont(element, attached);
 	}
 
-	private void setTextFont(Element element) {
+	private void setTextFont(Element element, boolean attached) {
 		VMLUtil.getOrCreateChildElementWithTagName(element, "textpath")
 				.getStyle().setProperty(
 						"font",
 						element.getPropertyInt("_fontsize") + "px "
 								+ element.getPropertyString("_fontfamily"));
-		setTextSize(element);
+		fixTextPosition(element, attached);
 	}
 
 	private boolean isTextElement(Element element) {
@@ -515,15 +505,15 @@ public class VMLImpl extends SVGImpl {
 	}
 
 	@Override
-	public void add(Element root, Element element) {
+	public void add(Element root, Element element, boolean attached) {
 		root.appendChild(element);
-		applyFillAndStroke(element);
+		applyFillAndStroke(element, attached);
 		if (isTextElement(element)) {
-			setTextSize(element);
+			fixTextPosition(element, attached);
 		}
 	}
 
-	private void applyFillAndStroke(Element element) {
+	private void applyFillAndStroke(Element element, boolean attached) {
 		if (VMLUtil.hasChildElementWithTagName(element, "fill")) {
 			setFillColor(element, getFillColor(element));
 			setFillOpacity(element, getFillOpacity(element));
@@ -531,7 +521,7 @@ public class VMLImpl extends SVGImpl {
 		if (VMLUtil.hasChildElementWithTagName(element, "stroke")) {
 			setStrokeColor(element, getStrokeColor(element));
 			setStrokeOpacity(element, getStrokeOpacity(element));
-			setStrokeWidth(element, getStrokeWidth(element));
+			setStrokeWidth(element, getStrokeWidth(element), attached);
 		}
 	}
 
@@ -567,6 +557,13 @@ public class VMLImpl extends SVGImpl {
 	public int getRotation(Element element) {
 		return NumberUtil.parseIntValue(element.getStyle().getProperty(
 				"rotation"), 0);
+	}
+
+	@Override
+	public void onAttach(Element element, boolean attached) {
+		if (isTextElement(element)) {
+			fixTextPosition(element, attached);
+		}
 	}
 
 }

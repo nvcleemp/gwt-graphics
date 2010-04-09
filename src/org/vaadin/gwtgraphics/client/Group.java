@@ -32,7 +32,7 @@ public class Group extends VectorObject implements VectorObjectContainer {
 	 */
 	public VectorObject add(VectorObject vo) {
 		childrens.add(vo);
-		getImpl().add(getElement(), vo.getElement());
+		getImpl().add(getElement(), vo.getElement(), vo.isAttached());
 		vo.setParent(this);
 		return vo;
 	}

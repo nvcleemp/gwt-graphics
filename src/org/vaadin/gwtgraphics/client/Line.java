@@ -149,7 +149,7 @@ public class Line extends VectorObject implements Strokeable, Animatable {
 	 * @see org.vaadin.gwtgraphics.client.Strokeable#setStrokeWidth(int)
 	 */
 	public void setStrokeWidth(int width) {
-		getImpl().setStrokeWidth(getElement(), width);
+		getImpl().setStrokeWidth(getElement(), width, isAttached());
 	}
 
 	/*

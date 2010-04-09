@@ -18,7 +18,7 @@ public class SafariSVGImpl extends SVGImpl {
 			// When a text element is already added to the document's DOM tree,
 			// for some reason element's position doesn't update without setting
 			// some other attribute.
-			setTextFontSize(element, getTextFontSize(element));
+			setTextFontSize(element, getTextFontSize(element), attached);
 		}
 	}
 
@@ -29,7 +29,7 @@ public class SafariSVGImpl extends SVGImpl {
 			// When a text element is already added to the document's DOM tree,
 			// for some reason element's position doesn't update without setting
 			// some other attribute.
-			setTextFontSize(element, getTextFontSize(element));
+			setTextFontSize(element, getTextFontSize(element), attached);
 		}
 	}
 

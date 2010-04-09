@@ -154,7 +154,7 @@ public abstract class Shape extends VectorObject implements Strokeable,
 	 * @see org.vaadin.gwtgraphics.client.Strokeable#setStrokeWidth(int)
 	 */
 	public void setStrokeWidth(int width) {
-		getImpl().setStrokeWidth(getElement(), width);
+		getImpl().setStrokeWidth(getElement(), width, isAttached());
 	}
 
 	/*

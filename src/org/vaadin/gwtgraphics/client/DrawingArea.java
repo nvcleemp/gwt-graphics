@@ -100,7 +100,7 @@ public class DrawingArea extends Widget implements VectorObjectContainer,
 	 * gwtgraphics.client.VectorObject)
 	 */
 	public VectorObject add(VectorObject vo) {
-		getImpl().add(root, vo.getElement());
+		getImpl().add(root, vo.getElement(), vo.isAttached());
 		vo.setParent(this);
 		childrens.add(vo);
 		return vo;

@@ -182,6 +182,7 @@ public abstract class VectorObject extends Widget implements HasClickHandlers,
 	@Override
 	protected void onAttach() {
 		super.onAttach();
+		getImpl().onAttach(getElement(), isAttached());
 	}
 
 	/*

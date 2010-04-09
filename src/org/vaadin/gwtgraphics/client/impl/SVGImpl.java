@@ -163,7 +163,7 @@ public class SVGImpl {
 		return NumberUtil.parseIntValue(element, "stroke-width", 0);
 	}
 
-	public void setStrokeWidth(Element element, int width) {
+	public void setStrokeWidth(Element element, int width, boolean attached) {
 		SVGUtil.setAttributeNS(element, "stroke-width", width);
 	}
 
@@ -263,7 +263,7 @@ public class SVGImpl {
 		return element.getInnerText();
 	}
 
-	public void setText(Element element, String text) {
+	public void setText(Element element, String text, boolean attached) {
 		element.setInnerText(text);
 	}
 
@@ -271,7 +271,8 @@ public class SVGImpl {
 		return element.getAttribute("font-family");
 	}
 
-	public void setTextFontFamily(Element element, String family) {
+	public void setTextFontFamily(Element element, String family,
+			boolean attached) {
 		SVGUtil.setAttributeNS(element, "font-family", family);
 	}
 
@@ -279,7 +280,7 @@ public class SVGImpl {
 		return NumberUtil.parseIntValue(element, "font-size", 0);
 	}
 
-	public void setTextFontSize(Element element, int size) {
+	public void setTextFontSize(Element element, int size, boolean attached) {
 		SVGUtil.setAttributeNS(element, "font-size", size);
 	}
 
@@ -318,7 +319,7 @@ public class SVGImpl {
 
 	}
 
-	public void add(Element root, Element element) {
+	public void add(Element root, Element element, boolean attached) {
 		root.appendChild(element);
 	}
 
@@ -365,5 +366,8 @@ public class SVGImpl {
 
 	public int getRotation(Element element) {
 		return element.getPropertyInt("_rotation");
+	}
+
+	public void onAttach(Element element, boolean attached) {
 	}
 }
