@@ -179,8 +179,9 @@ public class EditorPanel extends VerticalPanel implements ChangeHandler,
 				metadata.addVectorObject(vo, "image", "10, 10, 110, 110, \"\"");
 				break;
 			case 6:
-				vo = new Text(10, 10, "text");
-				metadata.addVectorObject(vo, "text", "10, 10, \"text\"");
+				vo = new Text(10, 20, "Hello world!");
+				metadata
+						.addVectorObject(vo, "text", "10, 20, \"Hello world!\"");
 				break;
 			case 7:
 				vo = new Path(10, 10);
