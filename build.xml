@@ -1,65 +1,65 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="GWT Graphics" default="all" basedir=".">
-  <description>
+	<description>
     GWT Graphics build file.
   </description>
-  
-  <property environment="env"/>
-  <property file="build.properties" />
-  <mkdir dir="${build.dir}" />
 
-  <!-- set classpath -->
-  <path id="project.class.path">
-    <pathelement path="${java.class.path}/"/>
-    <pathelement path="${env.GWT_HOME}\gwt-user.jar"/>
+	<property environment="env" />
+	<property file="build.properties" />
+	<mkdir dir="${build.dir}" />
 
-    <!-- Additional dependencies (such as junit) go here -->
-  </path>
+	<!-- set classpath -->
+	<path id="project.class.path">
+		<pathelement path="${java.class.path}/" />
+		<pathelement path="${env.GWT_HOME}\gwt-user.jar" />
 
-  <target name="compile" description="Compile src to bin">
-    <mkdir dir="bin"/>
-    <javac srcdir="src" destdir="bin" includes="**" excludes="**/org/vaadin/gwtgraphics/testapp/**" debug="on" debuglevel="lines,vars,source" source="1.5">
-      <classpath refid="project.class.path"/>
-    </javac>
-  </target>
+		<!-- Additional dependencies (such as junit) go here -->
+	</path>
 
-  <target name="package" depends="compile" description="Package up the project as a jar">
-  	<delete file="MANIFEST.MF"/>
-  	<manifest file="MANIFEST.MF">
-      <attribute name="Manifest-Version" value="1.0"/>
-  	  <attribute name="Implementation-Title" value="GWT Graphics"/>
-  	  <attribute name="Vaadin-Package-Version" value="1"/>
-  	  <attribute name="Implementation-Version" value="${version}"/>
-  	  <attribute name="Implementation-Vendor" value="Henri Kerola / IT Mill Ltd"/>
-  	</manifest>
-    <jar destfile="${build.dir}/gwt-graphics-${version}.jar" manifest="MANIFEST.MF">
-      <fileset dir="bin">
-        <include name="**/*.class"/>
-      </fileset>
-      <!-- Get everything; source, modules, html files -->
-      <fileset dir="src" excludes="**/org/vaadin/gwtgraphics/testapp/**"/>
-    </jar>
-  </target>
-  
-  <target name="package-testapp-war">
-      <war destfile="${build.dir}/gwt-graphics-test.war" webxml="war/WEB-INF/web.xml">
+	<target name="compile" description="Compile src to bin">
+		<mkdir dir="bin" />
+		<javac srcdir="src" destdir="bin" includes="**" excludes="**/org/vaadin/gwtgraphics/testapp/**" debug="on" debuglevel="lines,vars,source" source="1.5">
+			<classpath refid="project.class.path" />
+		</javac>
+	</target>
+
+	<target name="package" depends="compile" description="Package up the project as a jar">
+		<delete file="MANIFEST.MF" />
+		<manifest file="MANIFEST.MF">
+			<attribute name="Manifest-Version" value="1.0" />
+			<attribute name="Implementation-Title" value="GWT Graphics" />
+			<attribute name="Vaadin-Package-Version" value="1" />
+			<attribute name="Implementation-Version" value="${version}" />
+			<attribute name="Implementation-Vendor" value="Henri Kerola / IT Mill Ltd" />
+		</manifest>
+		<jar destfile="${build.dir}/gwt-graphics-${version}.jar" manifest="MANIFEST.MF">
+			<fileset dir="bin">
+				<include name="**/*.class" />
+			</fileset>
+			<!-- Get everything; source, modules, html files -->
+			<fileset dir="src" excludes="**/org/vaadin/gwtgraphics/testapp/**" />
+		</jar>
+	</target>
+
+	<target name="package-testapp-war">
+		<war destfile="${build.dir}/gwt-graphics-test.war" webxml="war/WEB-INF/web.xml">
 			<fileset dir="war" includes="**" />
-	  </war>
-  </target>
+		</war>
+	</target>
 
-  <target name="clean">
-    <!-- Delete the bin directory tree -->
-    <delete file="${build.dir}/gwt-graphics-${version}.jar"/>
-  	<delete file="${build.dir}/gwt-graphics-test.war"/>
-    <delete>
-      <fileset dir="bin" includes="**/*.class"/>
-    </delete>
-  </target>
-  
-   <target name="javadoc">
-        <javadoc access="public" author="true" classpath="${env.GWT_HOME}/gwt-dev.jar:${env.GWT_HOME}/gwt-user.jar" destdir="javadocs" doctitle="GWT Graphics" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="org.vaadin.gwtgraphics.vaadin.contrib.gwtgraphics.client.shape.path,org.vaadin.gwtgraphics.client.shape,org.vaadin.gwtgraphics.client,org.vaadin.gwtgraphics.client.animation" source="1.5" sourcepath="src" splitindex="true" use="true" version="true"/>
-    </target>
+	<target name="clean">
+		<!-- Delete the bin directory tree -->
+		<delete file="${build.dir}/gwt-graphics-${version}.jar" />
+		<delete file="${build.dir}/gwt-graphics-test.war" />
+		<delete>
+			<fileset dir="bin" includes="**/*.class" />
+		</delete>
+	</target>
 
-  <target name="all" depends="package,package-testapp-war,javadoc"/>
+	<target name="javadoc">
+		<javadoc access="public" author="true" classpath="${env.GWT_HOME}/gwt-dev.jar:${env.GWT_HOME}/gwt-user.jar" destdir="javadocs" doctitle="GWT Graphics" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="org.vaadin.gwtgraphics.vaadin.contrib.gwtgraphics.client.shape.path,org.vaadin.gwtgraphics.client.shape,org.vaadin.gwtgraphics.client,org.vaadin.gwtgraphics.client.animation" source="1.5" sourcepath="src" splitindex="true" use="true" version="true" />
+	</target>
+
+	<target name="all" depends="package,package-testapp-war,javadoc" />
 
 </project>
