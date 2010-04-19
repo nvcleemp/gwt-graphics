@@ -59,4 +59,8 @@ public abstract class VMLUtil {
 		}
 		return null;
 	}
+
+	public native static String getTagName(Element element) /*-{
+		return element.tagName;
+	}-*/;
 }

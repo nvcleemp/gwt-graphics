@@ -211,7 +211,7 @@ public class VMLImpl extends SVGImpl {
 
 	@Override
 	public int getWidth(Element element) {
-		if (element.getTagName().equals("group")) {
+		if (VMLUtil.getTagName(element).equals("group")) {
 			// DrawingArea's root element
 			element = element.getParentElement();
 		}
@@ -221,7 +221,7 @@ public class VMLImpl extends SVGImpl {
 
 	@Override
 	public void setWidth(Element element, int width) {
-		if (element.getTagName().equals("group")) {
+		if (VMLUtil.getTagName(element).equals("group")) {
 			// DrawingArea's root element
 			element = element.getParentElement();
 			element.getParentElement().getStyle().setPropertyPx("width", width);
@@ -231,7 +231,7 @@ public class VMLImpl extends SVGImpl {
 
 	@Override
 	public int getHeight(Element element) {
-		if (element.getTagName().equals("group")) {
+		if (VMLUtil.getTagName(element).equals("group")) {
 			// DrawingArea's root element
 			element = element.getParentElement();
 		}
@@ -241,7 +241,7 @@ public class VMLImpl extends SVGImpl {
 
 	@Override
 	public void setHeight(Element element, int height) {
-		if (element.getTagName().equals("group")) {
+		if (VMLUtil.getTagName(element).equals("group")) {
 			// DrawingArea's root element
 			element = element.getParentElement();
 			element.getParentElement().getStyle().setPropertyPx("height",
@@ -351,7 +351,7 @@ public class VMLImpl extends SVGImpl {
 		// Save value for getter
 		element.setPropertyInt(x ? "_x" : "_y", xy);
 
-		String tagName = element.getTagName();
+		String tagName = VMLUtil.getTagName(element);
 		if (tagName.equals("line")) {
 			if (x) {
 				setLineFromTo(element, xy, null, true);
@@ -450,9 +450,10 @@ public class VMLImpl extends SVGImpl {
 	}
 
 	private boolean isTextElement(Element element) {
-		return element.getTagName().equals("shape")
+		return VMLUtil.getTagName(element).equals("shape")
 				&& element.getFirstChildElement() != null
-				&& element.getFirstChildElement().getTagName().equals("path");
+				&& VMLUtil.getTagName(element.getFirstChildElement()).equals(
+						"path");
 	}
 
 	@Override
