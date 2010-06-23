@@ -19,6 +19,22 @@ public interface VectorObjectContainer {
 	public abstract VectorObject add(VectorObject vo);
 
 	/**
+	 * Insert the given VectorObject before the specified index.
+	 * 
+	 * If the VectorObjectContainer contains already the VectorObject, it will
+	 * be removed from the VectorObjectContainer before insertion.
+	 * 
+	 * @param vo
+	 *            VectorObject to be inserted
+	 * @param beforeIndex
+	 *            the index before which the VectorObject will be inserted.
+	 * @return inserted VectorObject
+	 * @throws IndexOutOfBoundsException
+	 *             if <code>beforeIndex</code> is out of range
+	 */
+	public abstract VectorObject insert(VectorObject vo, int beforeIndex);
+
+	/**
 	 * Remove the given VectorObject from this VectorObjectContainer.
 	 * 
 	 * @param vo

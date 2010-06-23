@@ -112,6 +112,29 @@ public class DrawingArea extends Widget implements VectorObjectContainer,
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see
+	 * org.vaadin.gwtgraphics.client.VectorObjectContainer#insert(org.vaadin
+	 * .gwtgraphics.client.VectorObject, int)
+	 */
+	public VectorObject insert(VectorObject vo, int beforeIndex) {
+		if (beforeIndex < 0 || beforeIndex > getVectorObjectCount()) {
+			throw new IndexOutOfBoundsException();
+		}
+
+		if (childrens.contains(vo)) {
+			childrens.remove(vo);
+		}
+
+		childrens.add(beforeIndex, vo);
+		vo.setParent(this);
+		getImpl().insert(root, vo.getElement(), beforeIndex, vo.isAttached());
+
+		return vo;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.vaadin.gwtgraphics.client.VectorObjectContainer#pop(org.vaadin.
 	 * gwtgraphics.client.VectorObject)
 	 */

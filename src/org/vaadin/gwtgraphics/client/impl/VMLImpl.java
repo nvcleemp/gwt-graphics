@@ -514,6 +514,17 @@ public class VMLImpl extends SVGImpl {
 		}
 	}
 
+	@Override
+	public void insert(Element root, Element element, int beforeIndex,
+			boolean attached) {
+		Element e = root.getChild(beforeIndex).cast();
+		root.insertBefore(element, e);
+		applyFillAndStroke(element, attached);
+		if (isTextElement(element)) {
+			fixTextPosition(element, attached);
+		}
+	}
+
 	private void applyFillAndStroke(Element element, boolean attached) {
 		if (VMLUtil.hasChildElementWithTagName(element, "fill")) {
 			setFillColor(element, getFillColor(element));

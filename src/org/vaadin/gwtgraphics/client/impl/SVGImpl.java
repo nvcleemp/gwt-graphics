@@ -323,6 +323,15 @@ public class SVGImpl {
 		root.appendChild(element);
 	}
 
+	public void insert(Element root, Element element, int beforeIndex,
+			boolean attached) {
+		if ("defs".equals(root.getChild(0).getNodeName())) {
+			beforeIndex++;
+		}
+		Element e = root.getChild(beforeIndex).cast();
+		root.insertBefore(element, e);
+	}
+
 	public void remove(Element root, Element element) {
 		root.removeChild(element);
 	}
