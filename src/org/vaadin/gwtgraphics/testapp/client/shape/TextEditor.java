@@ -6,6 +6,7 @@ import org.vaadin.gwtgraphics.testapp.client.Metadata;
 import org.vaadin.gwtgraphics.testapp.client.ShapeEditor;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 
 public class TextEditor extends ShapeEditor {
@@ -16,6 +17,10 @@ public class TextEditor extends ShapeEditor {
 
 	private TextBox fontSize;
 
+	private Label textWidth;
+
+	private Label textHeight;
+
 	public TextEditor(Text vo, Metadata metadata, boolean newVo) {
 		super(vo, metadata, newVo);
 
@@ -24,11 +29,17 @@ public class TextEditor extends ShapeEditor {
 		textBox = addTextBoxRow("Text", 25);
 		fontFamily = addTextBoxRow("Font family", 25);
 		fontSize = addTextBoxRow("Font size", 8);
+		textWidth = new Label("");
+		addRow("Text width", textWidth);
+		textHeight = new Label("");
+		addRow("Text height", textHeight);
 
 		if (vo != null) {
 			textBox.setText(vo.getText());
 			fontFamily.setText(vo.getFontFamily());
 			fontSize.setText("" + vo.getFontSize());
+			textWidth.setText(vo.getTextWidth() + "px");
+			textHeight.setText(vo.getTextHeight() + "px");
 		}
 	}
 
@@ -58,6 +69,10 @@ public class TextEditor extends ShapeEditor {
 			}
 			fontSize.setText("" + text.getFontSize());
 		}
+
+		textWidth.setText(text.getTextWidth() + "px");
+		textHeight.setText(text.getTextHeight() + "px");
+
 	}
 
 }

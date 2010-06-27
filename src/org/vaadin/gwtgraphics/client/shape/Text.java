@@ -92,6 +92,24 @@ public class Text extends Shape {
 		getImpl().setTextFontSize(getElement(), size, isAttached());
 	}
 
+	/**
+	 * Returns the width of the rendered text in pixels.
+	 * 
+	 * @return the width of the rendered text in pixels
+	 */
+	public int getTextWidth() {
+		return getImpl().getTextWidth(getElement());
+	}
+
+	/**
+	 * Returns the height of the rendered text in pixels.
+	 * 
+	 * @return the height of the rendered text in pixels
+	 */
+	public int getTextHeight() {
+		return getImpl().getTextHeight(getElement());
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

@@ -21,9 +21,13 @@ import org.vaadin.gwtgraphics.client.shape.path.LineTo;
 import org.vaadin.gwtgraphics.client.shape.path.MoveTo;
 import org.vaadin.gwtgraphics.client.shape.path.PathStep;
 
+import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DeferredCommand;
+import com.google.gwt.user.client.ui.RootPanel;
 
 /**
  * This class contains the SVG implementation module of GWT Graphics.
@@ -378,5 +382,41 @@ public class SVGImpl {
 	}
 
 	public void onAttach(Element element, boolean attached) {
+	}
+
+	// Note that VMLImpl uses this same method impl.
+	public int getTextWidth(Element element) {
+		return measureTextSize(element, true);
+	}
+
+	// Note that VMLImpl uses this same method impl.
+	public int getTextHeight(Element element) {
+		return measureTextSize(element, false);
+	}
+
+	protected int measureTextSize(Element element, boolean measureWidth) {
+		String text = getText(element);
+		if (text == null || "".equals(text)) {
+			return 0;
+		}
+
+		DivElement measureElement = Document.get().createDivElement();
+		Style style = measureElement.getStyle();
+		style.setProperty("visibility", "hidden");
+		style.setProperty("display", "inline");
+		style.setProperty("whiteSpace", "nowrap");
+		style.setProperty("fontFamily", getTextFontFamily(element));
+		style.setPropertyPx("fontSize", getTextFontSize(element));
+		measureElement.setInnerText(text);
+		RootPanel.getBodyElement().appendChild(measureElement);
+		int measurement;
+		if (measureWidth) {
+			measurement = measureElement.getOffsetWidth();
+		} else {
+			measurement = measureElement.getOffsetHeight();
+		}
+		RootPanel.getBodyElement().removeChild(measureElement);
+
+		return measurement;
 	}
 }
