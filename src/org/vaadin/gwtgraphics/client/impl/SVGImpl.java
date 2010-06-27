@@ -340,7 +340,7 @@ public class SVGImpl {
 		root.removeChild(element);
 	}
 
-	public void pop(Element root, Element element) {
+	public void bringToFront(Element root, Element element) {
 		root.appendChild(element);
 	}
 

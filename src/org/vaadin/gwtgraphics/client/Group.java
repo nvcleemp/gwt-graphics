@@ -81,14 +81,15 @@ public class Group extends VectorObject implements VectorObjectContainer {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.vaadin.gwtgraphics.client.VectorObjectContainer#pop(org.vaadin.
-	 * gwtgraphics.client.VectorObject)
+	 * @see
+	 * org.vaadin.gwtgraphics.client.VectorObjectContainer#bringToFront(org.
+	 * vaadin.gwtgraphics.client.VectorObject)
 	 */
-	public VectorObject pop(VectorObject vo) {
+	public VectorObject bringToFront(VectorObject vo) {
 		if (vo.getParent() != this) {
 			return null;
 		}
-		getImpl().pop(getElement(), vo.getElement());
+		getImpl().bringToFront(getElement(), vo.getElement());
 		return vo;
 	}
 

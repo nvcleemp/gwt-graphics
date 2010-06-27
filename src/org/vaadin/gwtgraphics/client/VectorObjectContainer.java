@@ -47,13 +47,13 @@ public interface VectorObjectContainer {
 
 	/**
 	 * 
-	 * Pops the given VectorObject in this VectorObjectContainer on top.
+	 * Brings the given VectorObject to front in this VectorObjectContainer.
 	 * 
 	 * @param vo
-	 *            VectorObject to be popped on top
+	 *            VectorObject to be brought to front
 	 * @return the popped VectorObject
 	 */
-	public abstract VectorObject pop(VectorObject vo);
+	public abstract VectorObject bringToFront(VectorObject vo);
 
 	/**
 	 * Removes all contained VectorObjects from this VectorObjectContainer.
