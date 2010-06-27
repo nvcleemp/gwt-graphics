@@ -517,7 +517,7 @@ public class VMLImpl extends SVGImpl {
 	@Override
 	public void insert(Element root, Element element, int beforeIndex,
 			boolean attached) {
-		Element e = root.getChild(beforeIndex).cast();
+		Element e = root.getChildNodes().getItem(beforeIndex).cast();
 		root.insertBefore(element, e);
 		applyFillAndStroke(element, attached);
 		if (isTextElement(element)) {

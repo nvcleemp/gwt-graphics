@@ -329,10 +329,10 @@ public class SVGImpl {
 
 	public void insert(Element root, Element element, int beforeIndex,
 			boolean attached) {
-		if ("defs".equals(root.getChild(0).getNodeName())) {
+		if ("defs".equals(root.getChildNodes().getItem(0).getNodeName())) {
 			beforeIndex++;
 		}
-		Element e = root.getChild(beforeIndex).cast();
+		Element e = root.getChildNodes().getItem(beforeIndex).cast();
 		root.insertBefore(element, e);
 	}
 
