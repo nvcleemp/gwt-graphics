@@ -6,6 +6,8 @@
 
 	<property environment="env" />
 	<property file="build.properties" />
+	<property file="src/org/vaadin/gwtgraphics/client/bundle/GWTGraphicsConstants.properties" />
+	
 	<mkdir dir="${build.dir}" />
 
 	<!-- set classpath -->
