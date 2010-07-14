@@ -1,7 +1,9 @@
 package org.vaadin.gwtgraphics.testapp.client;
 
 import org.vaadin.gwtgraphics.client.DrawingArea;
+import org.vaadin.gwtgraphics.client.bundle.GWTGraphicsConstants;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
@@ -30,7 +32,7 @@ public class InteractiveTestApplication extends HorizontalPanel {
 		area.setStyleName("drawing-area");
 		vPanel.add(area);
 		vPanel.add(new Label("Using " + area.getRendererString()
-				+ " rendering."));
+				+ " rendering. Version: " + getVersion()));
 		DisclosurePanel sourceCodePanel = new DisclosurePanel("Source code");
 		sourceCodePanel.setAnimationEnabled(true);
 		code = new CodeView(metadata);
@@ -47,6 +49,11 @@ public class InteractiveTestApplication extends HorizontalPanel {
 
 		editPanel = new EditorPanel(metadata);
 		add(editPanel);
+	}
+
+	private String getVersion() {
+		GWTGraphicsConstants constants = GWT.create(GWTGraphicsConstants.class);
+		return constants.version();
 	}
 
 	public CodeView getCodeView() {
