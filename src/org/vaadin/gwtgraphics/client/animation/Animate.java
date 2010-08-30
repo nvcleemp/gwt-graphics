@@ -28,6 +28,12 @@ public class Animate {
 			double value = (endValue - startValue) * progress + startValue;
 			target.setPropertyDouble(property, value);
 		}
+
+		@Override
+		protected void onComplete() {
+			super.onComplete();
+			Animate.this.onComplete();
+		};
 	};
 
 	public Animate(Animatable target, String property, double startValue,
@@ -52,7 +58,13 @@ public class Animate {
 	public void stop() {
 		animation.cancel();
 	}
-	
+
+	/**
+	 * Called immediately after the animation completes.
+	 */
+	protected void onComplete() {
+	}
+
 	public Animatable getTarget() {
 		return target;
 	}
