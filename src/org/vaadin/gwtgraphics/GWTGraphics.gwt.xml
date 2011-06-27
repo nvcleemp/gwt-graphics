@@ -12,6 +12,13 @@
 		</any>
 	</replace-with>
 	
+	<replace-with class='org.vaadin.gwtgraphics.client.impl.SVGImpl'>
+		<when-type-is class='org.vaadin.gwtgraphics.client.impl.SVGImpl'/>
+		<any>
+			<when-property-is name='user.agent' value='ie9'/>
+		</any>
+	</replace-with>
+	
 	<replace-with class='org.vaadin.gwtgraphics.client.impl.SafariSVGImpl'>
 		<when-type-is class='org.vaadin.gwtgraphics.client.impl.SVGImpl'/>
 		<when-property-is name='user.agent' value='safari'/>
