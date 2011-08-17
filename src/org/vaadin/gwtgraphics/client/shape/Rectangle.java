@@ -56,13 +56,23 @@ public class Rectangle extends Shape {
 		getImpl().setWidth(getElement(), width);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.vaadin.gwtgraphics.client.VectorObject#setWidth(java.lang.String)
+	 */
 	@Override
 	public void setWidth(String width) {
+		boolean successful = false;
 		if (width != null && width.endsWith("px")) {
-			setWidth(Integer.parseInt(width));
-		} else {
-			throw new UnsupportedOperationException(
-					"Only pixel units are supported");
+			try {
+				setWidth(Integer.parseInt(width
+						.substring(0, width.length() - 2)));
+				successful = true;
+			} catch (NumberFormatException e) {
+			}
+		}
+		if (!successful) {
+			throw new IllegalArgumentException(
+					"Only pixel units (px) are supported");
 		}
 	}
 
@@ -85,13 +95,23 @@ public class Rectangle extends Shape {
 		getImpl().setHeight(getElement(), height);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.vaadin.gwtgraphics.client.VectorObject#setHeight(java.lang.String)
+	 */
 	@Override
 	public void setHeight(String height) {
+		boolean successful = false;
 		if (height != null && height.endsWith("px")) {
-			setHeight(Integer.parseInt(height));
-		} else {
-			throw new UnsupportedOperationException(
-					"Only pixel units are supported");
+			try {
+				setHeight(Integer.parseInt(height.substring(0,
+						height.length() - 2)));
+				successful = true;
+			} catch (NumberFormatException e) {
+			}
+		}
+		if (!successful) {
+			throw new IllegalArgumentException(
+					"Only pixel units (px) are supported");
 		}
 	}
 
