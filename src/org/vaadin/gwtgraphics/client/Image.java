@@ -112,6 +112,23 @@ public class Image extends VectorObject implements Positionable, Animatable {
 	public void setWidth(int width) {
 		getImpl().setWidth(getElement(), width);
 	}
+	
+	@Override
+	public void setWidth(String width) {
+		boolean successful = false;
+		if (width != null && width.endsWith("px")) {
+			try {
+				setWidth(Integer.parseInt(width
+						.substring(0, width.length() - 2)));
+				successful = true;
+			} catch (NumberFormatException e) {
+			}
+		}
+		if (!successful) {
+			throw new IllegalArgumentException(
+					"Only pixel units (px) are supported");
+		}
+	}
 
 	/**
 	 * Returns the height of the Image in pixels.
@@ -130,6 +147,26 @@ public class Image extends VectorObject implements Positionable, Animatable {
 	 */
 	public void setHeight(int height) {
 		getImpl().setHeight(getElement(), height);
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.vaadin.gwtgraphics.client.VectorObject#setHeight(java.lang.String)
+	 */
+	@Override
+	public void setHeight(String height) {
+		boolean successful = false;
+		if (height != null && height.endsWith("px")) {
+			try {
+				setHeight(Integer.parseInt(height.substring(0,
+						height.length() - 2)));
+				successful = true;
+			} catch (NumberFormatException e) {
+			}
+		}
+		if (!successful) {
+			throw new IllegalArgumentException(
+					"Only pixel units (px) are supported");
+		}
 	}
 
 	/*
