@@ -187,8 +187,8 @@ public class SVGImpl {
 	}
 
 	public double getStrokeOpacity(Element element) {
-		return NumberUtil.parseDoubleValue(element
-				.getAttribute("stroke-opacity"), 1);
+		return NumberUtil.parseDoubleValue(
+				element.getAttribute("stroke-opacity"), 1);
 	}
 
 	public void setStrokeOpacity(Element element, double opacity) {
@@ -213,8 +213,8 @@ public class SVGImpl {
 	public void setHeight(Element element, int height) {
 		SVGUtil.setAttributeNS(element, "height", height);
 		if (element.getTagName().equalsIgnoreCase("svg")) {
-			element.getParentElement().getStyle().setPropertyPx("height",
-					height);
+			element.getParentElement().getStyle()
+					.setPropertyPx("height", height);
 		}
 	}
 
@@ -249,29 +249,31 @@ public class SVGImpl {
 				path.append(" z");
 			} else if (step.getClass() == MoveTo.class) {
 				MoveTo moveTo = (MoveTo) step;
-				path.append(moveTo.isRelativeCoords() ? " m" : " M").append(
-						moveTo.getX()).append(" ").append(moveTo.getY());
+				path.append(moveTo.isRelativeCoords() ? " m" : " M")
+						.append(moveTo.getX()).append(" ")
+						.append(moveTo.getY());
 			} else if (step.getClass() == LineTo.class) {
 				LineTo lineTo = (LineTo) step;
-				path.append(lineTo.isRelativeCoords() ? " l" : " L").append(
-						lineTo.getX()).append(" ").append(lineTo.getY());
+				path.append(lineTo.isRelativeCoords() ? " l" : " L")
+						.append(lineTo.getX()).append(" ")
+						.append(lineTo.getY());
 			} else if (step.getClass() == CurveTo.class) {
 				CurveTo curve = (CurveTo) step;
 				path.append(curve.isRelativeCoords() ? " c" : " C");
 				path.append(curve.getX1()).append(" ").append(curve.getY1());
-				path.append(" ").append(curve.getX2()).append(" ").append(
-						curve.getY2());
-				path.append(" ").append(curve.getX()).append(" ").append(
-						curve.getY());
+				path.append(" ").append(curve.getX2()).append(" ")
+						.append(curve.getY2());
+				path.append(" ").append(curve.getX()).append(" ")
+						.append(curve.getY());
 			} else if (step.getClass() == Arc.class) {
 				Arc arc = (Arc) step;
 				path.append(arc.isRelativeCoords() ? " a" : " A");
 				path.append(arc.getRx()).append(",").append(arc.getRy());
 				path.append(" ").append(arc.getxAxisRotation());
-				path.append(" ").append(arc.isLargeArc() ? "1" : "0").append(
-						",").append(arc.isSweep() ? "1" : "0");
-				path.append(" ").append(arc.getX()).append(",").append(
-						arc.getY());
+				path.append(" ").append(arc.isLargeArc() ? "1" : "0")
+						.append(",").append(arc.isSweep() ? "1" : "0");
+				path.append(" ").append(arc.getX()).append(",")
+						.append(arc.getY());
 			}
 		}
 

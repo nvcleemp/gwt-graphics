@@ -65,8 +65,8 @@ public class RectangleEditor extends ShapeEditor {
 			try {
 				rect.setRoundedCorners(Integer.parseInt(roundedCorners
 						.getText()));
-				code.addMethodCall(vo, "setRoundedCorners", roundedCorners
-						.getText());
+				code.addMethodCall(vo, "setRoundedCorners",
+						roundedCorners.getText());
 			} catch (NumberFormatException e) {
 			}
 			roundedCorners.setText("" + rect.getRoundedCorners());

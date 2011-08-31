@@ -19,7 +19,7 @@ package org.vaadin.gwtgraphics.client.shape.path;
  * This class represents an arc step.
  * 
  * @author Henri Kerola
- *
+ * 
  */
 public class Arc extends LineTo {
 

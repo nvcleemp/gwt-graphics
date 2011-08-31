@@ -123,8 +123,8 @@ public class CodeView extends HTML {
 				if (methodName.substring(0, 2).equals("._")) {
 					methodName = "." + methodName.substring(4);
 				}
-				html.append(name).append(methodName).append("(").append(
-						e.getValue()).append(");<br>");
+				html.append(name).append(methodName).append("(")
+						.append(e.getValue()).append(");<br>");
 			}
 		}
 		setHTML(html.toString());

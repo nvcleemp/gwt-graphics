@@ -71,16 +71,19 @@ public class Rectangle extends Shape {
 		getImpl().setWidth(getElement(), width);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.vaadin.gwtgraphics.client.VectorObject#setWidth(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vaadin.gwtgraphics.client.VectorObject#setWidth(java.lang.String)
 	 */
 	@Override
 	public void setWidth(String width) {
 		boolean successful = false;
 		if (width != null && width.endsWith("px")) {
 			try {
-				setWidth(Integer.parseInt(width
-						.substring(0, width.length() - 2)));
+				setWidth(Integer
+						.parseInt(width.substring(0, width.length() - 2)));
 				successful = true;
 			} catch (NumberFormatException e) {
 			}
@@ -110,8 +113,11 @@ public class Rectangle extends Shape {
 		getImpl().setHeight(getElement(), height);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.vaadin.gwtgraphics.client.VectorObject#setHeight(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vaadin.gwtgraphics.client.VectorObject#setHeight(java.lang.String)
 	 */
 	@Override
 	public void setHeight(String height) {

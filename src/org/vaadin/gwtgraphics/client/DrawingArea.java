@@ -283,8 +283,8 @@ public class DrawingArea extends Widget implements VectorObjectContainer,
 		boolean successful = false;
 		if (width != null && width.endsWith("px")) {
 			try {
-				setWidth(Integer.parseInt(width
-						.substring(0, width.length() - 2)));
+				setWidth(Integer
+						.parseInt(width.substring(0, width.length() - 2)));
 				successful = true;
 			} catch (NumberFormatException e) {
 			}

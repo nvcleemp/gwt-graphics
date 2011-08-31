@@ -80,9 +80,7 @@ public class ShapeEditor extends VectorObjectEditor {
 		} else if (sender == fillOpacity) {
 			try {
 				shape.setFillOpacity(Double.parseDouble(fillOpacity.getText()));
-				code
-						.addMethodCall(vo, "setFillOpacity", shape
-								.getFillOpacity());
+				code.addMethodCall(vo, "setFillOpacity", shape.getFillOpacity());
 			} catch (NumberFormatException e) {
 			}
 			fillOpacity.setText("" + shape.getFillOpacity());
@@ -93,9 +91,7 @@ public class ShapeEditor extends VectorObjectEditor {
 		} else if (sender == strokeWidth) {
 			try {
 				shape.setStrokeWidth(Integer.parseInt(strokeWidth.getText()));
-				code
-						.addMethodCall(vo, "setStrokeWidth", shape
-								.getStrokeWidth());
+				code.addMethodCall(vo, "setStrokeWidth", shape.getStrokeWidth());
 			} catch (NumberFormatException e) {
 			}
 			strokeWidth.setText("" + shape.getStrokeWidth());
@@ -103,8 +99,8 @@ public class ShapeEditor extends VectorObjectEditor {
 			try {
 				shape.setStrokeOpacity(Double.parseDouble(strokeOpacity
 						.getText()));
-				code.addMethodCall(vo, "setStrokeOpacity", shape
-						.getStrokeOpacity());
+				code.addMethodCall(vo, "setStrokeOpacity",
+						shape.getStrokeOpacity());
 			} catch (NumberFormatException e) {
 			}
 			strokeOpacity.setText("" + shape.getStrokeOpacity());

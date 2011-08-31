@@ -127,14 +127,14 @@ public class Image extends VectorObject implements Positionable, Animatable {
 	public void setWidth(int width) {
 		getImpl().setWidth(getElement(), width);
 	}
-	
+
 	@Override
 	public void setWidth(String width) {
 		boolean successful = false;
 		if (width != null && width.endsWith("px")) {
 			try {
-				setWidth(Integer.parseInt(width
-						.substring(0, width.length() - 2)));
+				setWidth(Integer
+						.parseInt(width.substring(0, width.length() - 2)));
 				successful = true;
 			} catch (NumberFormatException e) {
 			}
@@ -163,9 +163,12 @@ public class Image extends VectorObject implements Positionable, Animatable {
 	public void setHeight(int height) {
 		getImpl().setHeight(getElement(), height);
 	}
-	
-	/* (non-Javadoc)
-	 * @see org.vaadin.gwtgraphics.client.VectorObject#setHeight(java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.vaadin.gwtgraphics.client.VectorObject#setHeight(java.lang.String)
 	 */
 	@Override
 	public void setHeight(String height) {

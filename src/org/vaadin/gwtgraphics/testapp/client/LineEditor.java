@@ -96,8 +96,8 @@ public class LineEditor extends VectorObjectEditor {
 		} else if (sender == strokeWidth) {
 			try {
 				line.setStrokeWidth(Integer.parseInt(strokeWidth.getText()));
-				code.addMethodCall(line, "setStrokeWidth", line
-						.getStrokeWidth());
+				code.addMethodCall(line, "setStrokeWidth",
+						line.getStrokeWidth());
 			} catch (NumberFormatException e) {
 			}
 			strokeWidth.setText("" + line.getStrokeWidth());
@@ -105,8 +105,8 @@ public class LineEditor extends VectorObjectEditor {
 			try {
 				line.setStrokeOpacity(Double.parseDouble(strokeOpacity
 						.getText()));
-				code.addMethodCall(vo, "setStrokeOpacity", line
-						.getStrokeOpacity());
+				code.addMethodCall(vo, "setStrokeOpacity",
+						line.getStrokeOpacity());
 			} catch (NumberFormatException e) {
 			}
 			strokeOpacity.setText("" + line.getStrokeOpacity());
