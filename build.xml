@@ -59,7 +59,7 @@
 	</target>
 
 	<target name="javadoc">
-		<javadoc access="public" author="true" classpath="${env.GWT_HOME}/gwt-dev.jar:${env.GWT_HOME}/gwt-user.jar" destdir="javadocs" doctitle="GWT Graphics" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="org.vaadin.gwtgraphics.vaadin.contrib.gwtgraphics.client.shape.path,org.vaadin.gwtgraphics.client.shape,org.vaadin.gwtgraphics.client,org.vaadin.gwtgraphics.client.animation" source="1.5" sourcepath="src" splitindex="true" use="true" version="true" />
+		<javadoc access="public" author="true" classpath="${env.GWT_HOME}/gwt-dev.jar:${env.GWT_HOME}/gwt-user.jar" destdir="javadocs" doctitle="GWT Graphics" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="org.vaadin.gwtgraphics.vaadin.contrib.gwtgraphics.client.shape.path,org.vaadin.gwtgraphics.client.shape,org.vaadin.gwtgraphics.client,org.vaadin.gwtgraphics.client.animation,org.vaadin.gwtgraphics.client.bundle" source="1.5" sourcepath="src" splitindex="true" use="true" version="true" />
 	</target>
 
 	<target name="all" depends="package,package-testapp-war,javadoc" />
