@@ -39,7 +39,7 @@ public interface Strokeable {
 	 * <li>rgb(100%, 0%, 0%)
 	 * </ul>
 	 * 
-	 * @see http://www.w3.org/TR/CSS2/syndata.html#value-def-color
+	 * @see <a href="http://www.w3.org/TR/CSS2/syndata.html#value-def-color">http://www.w3.org/TR/CSS2/syndata.html#value-def-color</a>
 	 * @param color
 	 *            the new stroke color
 	 */

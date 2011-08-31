@@ -80,9 +80,6 @@ public abstract class Shape extends VectorObject implements Strokeable,
 
 	/**
 	 * Returns the current fill color of the element.
-	 * 
-	 * @param color
-	 *            the current fill color
 	 */
 	public String getFillColor() {
 		return getImpl().getFillColor(getElement());
@@ -102,7 +99,7 @@ public abstract class Shape extends VectorObject implements Strokeable,
 	 * 
 	 * Setting the color to null disables elements filling.
 	 * 
-	 * @see http://www.w3.org/TR/CSS2/syndata.html#value-def-color
+	 * @see <a href="http://www.w3.org/TR/CSS2/syndata.html#value-def-color">http://www.w3.org/TR/CSS2/syndata.html#value-def-color</a>
 	 * @param color
 	 *            the new fill color
 	 */
