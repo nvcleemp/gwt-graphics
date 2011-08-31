@@ -259,8 +259,8 @@ public class VMLImpl extends SVGImpl {
 		if (VMLUtil.getTagName(element).equals("group")) {
 			// DrawingArea's root element
 			element = element.getParentElement();
-			element.getParentElement().getStyle().setPropertyPx("height",
-					height);
+			element.getParentElement().getStyle()
+					.setPropertyPx("height", height);
 		}
 		element.getStyle().setPropertyPx("height", height);
 	}
@@ -308,20 +308,22 @@ public class VMLImpl extends SVGImpl {
 				path.append(" x e");
 			} else if (step.getClass() == MoveTo.class) {
 				MoveTo moveTo = (MoveTo) step;
-				path.append(moveTo.isRelativeCoords() ? " t" : " m").append(
-						moveTo.getX()).append(" ").append(moveTo.getY());
+				path.append(moveTo.isRelativeCoords() ? " t" : " m")
+						.append(moveTo.getX()).append(" ")
+						.append(moveTo.getY());
 			} else if (step.getClass() == LineTo.class) {
 				LineTo lineTo = (LineTo) step;
-				path.append(lineTo.isRelativeCoords() ? " r" : " l").append(
-						lineTo.getX()).append(" ").append(lineTo.getY());
+				path.append(lineTo.isRelativeCoords() ? " r" : " l")
+						.append(lineTo.getX()).append(" ")
+						.append(lineTo.getY());
 			} else if (step.getClass() == CurveTo.class) {
 				CurveTo curve = (CurveTo) step;
 				path.append(curve.isRelativeCoords() ? " v" : " c");
 				path.append(curve.getX1()).append(" ").append(curve.getY1());
-				path.append(" ").append(curve.getX2()).append(" ").append(
-						curve.getY2());
-				path.append(" ").append(curve.getX()).append(" ").append(
-						curve.getY());
+				path.append(" ").append(curve.getX2()).append(" ")
+						.append(curve.getY2());
+				path.append(" ").append(curve.getX()).append(" ")
+						.append(curve.getY());
 			} else if (step.getClass() == Arc.class) {
 				// TODO
 			}
@@ -457,7 +459,8 @@ public class VMLImpl extends SVGImpl {
 
 	private void setTextFont(Element element, boolean attached) {
 		VMLUtil.getOrCreateChildElementWithTagName(element, "textpath")
-				.getStyle().setProperty(
+				.getStyle()
+				.setProperty(
 						"font",
 						element.getPropertyInt("_fontsize") + "px "
 								+ element.getPropertyString("_fontfamily"));
@@ -582,8 +585,8 @@ public class VMLImpl extends SVGImpl {
 
 	@Override
 	public int getRotation(Element element) {
-		return NumberUtil.parseIntValue(element.getStyle().getProperty(
-				"rotation"), 0);
+		return NumberUtil.parseIntValue(
+				element.getStyle().getProperty("rotation"), 0);
 	}
 
 	@Override
