@@ -17,6 +17,23 @@ package org.vaadin.gwtgraphics.client.bundle;
 
 import com.google.gwt.i18n.client.Constants;
 
+/**
+ * The version of GWT Graphics can be read in GWT Java code as follows:
+ * 
+ * <pre>
+ * GWTGraphicsConstants constants = GWT.create(GWTGraphicsConstants.class);
+ * String version = constants.version();
+ * </pre>
+ * 
+ * @author Henri Kerola
+ * 
+ */
 public interface GWTGraphicsConstants extends Constants {
+
+	/**
+	 * Returns the version of GWT Graphics, e.g. "1.0.0".
+	 * 
+	 * @return the version of GWT Graphics
+	 */
 	String version();
 }
