@@ -140,6 +140,24 @@ public class Path extends Shape {
 	}
 
 	/**
+	 * Inserts a new Step at the given Position. Shifts the element currently at that position (if any) and any subsequent elements to the right (adds one to their indices).
+	 * 
+	 * @param index
+	 * 				index position where to add new Step 
+	 * @param step
+	 * 				new Step
+	 * @throws IllegalArgumentException
+	 */
+	public void addStep(int index, PathStep step) throws IllegalArgumentException {
+		if (index == 0 && !(step instanceof MoveTo || ((MoveTo) step).isRelativeCoords())) {
+			throw new IllegalArgumentException("The first step must be an absolute MoveTo step.");
+		} else {
+			steps.add(index, step);
+			drawPath();
+		}
+	}
+	
+	/**
 	 * Removes the PathStep element at the specified position. Shifts any
 	 * subsequent elements to the left.
 	 * 

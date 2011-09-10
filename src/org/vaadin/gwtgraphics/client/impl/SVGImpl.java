@@ -36,12 +36,12 @@ import org.vaadin.gwtgraphics.client.shape.path.LineTo;
 import org.vaadin.gwtgraphics.client.shape.path.MoveTo;
 import org.vaadin.gwtgraphics.client.shape.path.PathStep;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style;
-import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.DeferredCommand;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
@@ -124,7 +124,8 @@ public class SVGImpl {
 		final String posAttr = getPosAttribute(element, x);
 		SVGUtil.setAttributeNS(element, posAttr, value);
 		if (rotation != 0) {
-			DeferredCommand.addCommand(new Command() {
+			Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+				@Override
 				public void execute() {
 					SVGUtil.setAttributeNS(element, "transform", "");
 					SVGUtil.setAttributeNS(element, posAttr, value);
@@ -380,7 +381,8 @@ public class SVGImpl {
 			SVGUtil.setAttributeNS(element, "transform", "");
 			return;
 		}
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+			@Override
 			public void execute() {
 				setRotateTransform(element, degree, attached);
 			}

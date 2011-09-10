@@ -35,10 +35,10 @@ import org.vaadin.gwtgraphics.client.shape.path.LineTo;
 import org.vaadin.gwtgraphics.client.shape.path.MoveTo;
 import org.vaadin.gwtgraphics.client.shape.path.PathStep;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.DeferredCommand;
 
 /**
  * This class contains the VML implementation module of GWT Graphics.
@@ -355,7 +355,8 @@ public class VMLImpl extends SVGImpl {
 			return;
 		}
 		element.getStyle().setProperty("visibility", "hidden");
-		DeferredCommand.addCommand(new Command() {
+		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+			@Override
 			public void execute() {
 				setX(element, getX(element), attached);
 				setY(element, getY(element), attached);
