@@ -57,15 +57,16 @@ import com.google.gwt.core.client.Scheduler.ScheduledCommand;
  * @author Henri Kerola
  * 
  */
-public class Path extends Shape implements Cloneable  {
+public class Path extends Shape implements Cloneable {
 
 	/**
 	 * Predefined draw types<br/>
 	 * <code>AUTO</code>(default): path is automatically being redrawn on change<br/>
-	 * <code>MANUAL</code>: user has to explicitly call <code>issueRedraw(true)</code><br/>
+	 * <code>MANUAL</code>: user has to explicitly call
+	 * <code>issueRedraw(true)</code><br/>
 	 * <code>DEFERRED</code>: redraw is deffered
 	 */
-	public enum RedrawType{
+	public enum RedrawType {
 		AUTO, MANUAL, DEFERRED
 	}
 
@@ -94,14 +95,15 @@ public class Path extends Shape implements Cloneable  {
 		moveTo(x, y);
 	}
 
-
 	/**
-	 * Creates an empty path with initial path step capacity. Useful when cloning the path.
-	 * Only to be used by cloning and extended classes when number of steps is known.
+	 * Creates an empty path with initial path step capacity. Useful when
+	 * cloning the path. Only to be used by cloning and extended classes when
+	 * number of steps is known.
 	 * 
-	 * @param capacity inicial capacity of <code>steps</code> list.
+	 * @param capacity
+	 *            inicial capacity of <code>steps</code> list.
 	 */
-	protected Path(int capacity){
+	protected Path(int capacity) {
 		steps = new ArrayList<PathStep>(capacity);
 	}
 
@@ -110,7 +112,7 @@ public class Path extends Shape implements Cloneable  {
 	 * 
 	 * @return a cloned Path
 	 */
-	public Path clone(){
+	public Path clone() {
 		int length = steps.size();
 		Path p = new Path(length);
 		p.setRedrawingType(RedrawType.MANUAL);
@@ -118,17 +120,24 @@ public class Path extends Shape implements Cloneable  {
 			if (step.getClass() == ClosePath.class) {
 				p.addStep(new ClosePath());
 			} else if (step.getClass() == MoveTo.class) {
-				MoveTo _step = (MoveTo)step;
-				p.addStep(new MoveTo(_step.isRelativeCoords(), _step.getX(), _step.getY()));
+				MoveTo _step = (MoveTo) step;
+				p.addStep(new MoveTo(_step.isRelativeCoords(), _step.getX(),
+						_step.getY()));
 			} else if (step.getClass() == LineTo.class) {
-				LineTo _step = (LineTo)step;
-				p.addStep(new LineTo(_step.isRelativeCoords(), _step.getX(), _step.getY()));
+				LineTo _step = (LineTo) step;
+				p.addStep(new LineTo(_step.isRelativeCoords(), _step.getX(),
+						_step.getY()));
 			} else if (step.getClass() == CurveTo.class) {
-				CurveTo _step = (CurveTo)step;
-				p.addStep(new CurveTo(_step.isRelativeCoords(), _step.getX1(), _step.getY1(), _step.getX2(), _step.getY2(), _step.getX(), _step.getY()));
+				CurveTo _step = (CurveTo) step;
+				p.addStep(new CurveTo(_step.isRelativeCoords(), _step.getX1(),
+						_step.getY1(), _step.getX2(), _step.getY2(), _step
+								.getX(), _step.getY()));
 			} else if (step.getClass() == Arc.class) {
-				Arc _step = (Arc)step;
-				p.addStep(new Arc(_step.isRelativeCoords(), _step.getRx(), _step.getRy(), _step.getxAxisRotation(), _step.isLargeArc(), _step.isSweep(), _step.getX(), _step.getY()));
+				Arc _step = (Arc) step;
+				p.addStep(new Arc(_step.isRelativeCoords(), _step.getRx(),
+						_step.getRy(), _step.getxAxisRotation(), _step
+								.isLargeArc(), _step.isSweep(), _step.getX(),
+						_step.getY()));
 			}
 		}
 		return p;
@@ -203,12 +212,12 @@ public class Path extends Shape implements Cloneable  {
 	 * @throws IllegalArgumentException
 	 */
 	public void setStep(int index, PathStep step)
-	throws IllegalArgumentException {
+			throws IllegalArgumentException {
 		if (index == 0
 				&& !(step instanceof MoveTo || ((MoveTo) step)
 						.isRelativeCoords())) {
 			throw new IllegalArgumentException(
-			"The first step must be an absolute MoveTo step.");
+					"The first step must be an absolute MoveTo step.");
 		} else {
 			steps.set(index, step);
 			issueRedraw(false);
@@ -216,27 +225,35 @@ public class Path extends Shape implements Cloneable  {
 	}
 
 	/**
-	 * Inserts a new Step at the given Position. Shifts the element currently at that position (if any) and any subsequent elements to the right (adds one to their indices).
+	 * Inserts a new Step at the given Position. Shifts the element currently at
+	 * that position (if any) and any subsequent elements to the right (adds one
+	 * to their indices).
 	 * 
 	 * @param index
-	 * 				index position where to add new Step 
+	 *            index position where to add new Step
 	 * @param step
-	 * 				new Step
+	 *            new Step
 	 * @throws IllegalArgumentException
 	 */
-	public void addStep(int index, PathStep step) throws IllegalArgumentException {
-		if (index == 0 && !(step instanceof MoveTo || ((MoveTo) step).isRelativeCoords())) {
-			throw new IllegalArgumentException("The first step must be an absolute MoveTo step.");
+	public void addStep(int index, PathStep step)
+			throws IllegalArgumentException {
+		if (index == 0
+				&& !(step instanceof MoveTo || ((MoveTo) step)
+						.isRelativeCoords())) {
+			throw new IllegalArgumentException(
+					"The first step must be an absolute MoveTo step.");
 		} else {
 			boolean appended = index == steps.size() - 1;
 			steps.add(index, step);
 
-			/* 
-			 * If new step is being appended (is last element), it can be redrawn immediately.
+			/*
+			 * If new step is being appended (is last element), it can be
+			 * redrawn immediately.
 			 */
-			if ( appended ){
-				getElement().getAttribute("d").concat(getImpl().getPathStepString(step));
-			}else{
+			if (appended) {
+				getElement().getAttribute("d").concat(
+						getImpl().getPathStepString(step));
+			} else {
 				issueRedraw(false);
 			}
 		}
@@ -244,17 +261,21 @@ public class Path extends Shape implements Cloneable  {
 
 	/**
 	 * Appends a new Step to the end of the Path.
-	 *   
+	 * 
 	 * @param step
-	 * 				new Step
+	 *            new Step
 	 * @throws IllegalArgumentException
 	 */
 	public void addStep(PathStep step) throws IllegalArgumentException {
-		if (steps.size() == 0 && !(step instanceof MoveTo || ((MoveTo) step).isRelativeCoords())) {
-			throw new IllegalArgumentException("The first step must be an absolute MoveTo step.");
+		if (steps.size() == 0
+				&& !(step instanceof MoveTo || ((MoveTo) step)
+						.isRelativeCoords())) {
+			throw new IllegalArgumentException(
+					"The first step must be an absolute MoveTo step.");
 		} else {
 			steps.add(step);
-			getElement().getAttribute("d").concat(getImpl().getPathStepString(step));
+			getElement().getAttribute("d").concat(
+					getImpl().getPathStepString(step));
 		}
 	}
 
@@ -281,9 +302,10 @@ public class Path extends Shape implements Cloneable  {
 
 	/**
 	 * Returs current PathStep list
-	 * @return list of path steps 
+	 * 
+	 * @return list of path steps
 	 */
-	public List<PathStep> getSteps(){
+	public List<PathStep> getSteps() {
 		return steps;
 	}
 
@@ -417,17 +439,18 @@ public class Path extends Shape implements Cloneable  {
 	}
 
 	/**
-	 * Issues new redraw request. If {@link #redrawingType} is set <code>DEFERRED</code>,
-	 * a new deferred call is issued instead. Note that, if there
-	 * is already deferred request pending, a new one will be ignored.
+	 * Issues new redraw request. If {@link #redrawingType} is set
+	 * <code>DEFERRED</code>, a new deferred call is issued instead. Note that,
+	 * if there is already deferred request pending, a new one will be ignored.
 	 * 
-	 * @param redrawIfManual if <code>true</code> path will be redraw even
-	 * 							if {@link #redrawingType} is set to <code>MANUAL</code>
+	 * @param redrawIfManual
+	 *            if <code>true</code> path will be redraw even if
+	 *            {@link #redrawingType} is set to <code>MANUAL</code>
 	 */
-	public void issueRedraw(boolean redrawIfManual){
-		if ( redrawingType == RedrawType.DEFERRED ){
+	public void issueRedraw(boolean redrawIfManual) {
+		if (redrawingType == RedrawType.DEFERRED) {
 			drawPathDeferred();
-		}else if ( redrawIfManual || redrawingType == RedrawType.AUTO){
+		} else if (redrawIfManual || redrawingType == RedrawType.AUTO) {
 			drawPath();
 		}
 	}

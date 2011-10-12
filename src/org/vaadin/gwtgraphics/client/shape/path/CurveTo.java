@@ -57,7 +57,7 @@ public class CurveTo extends LineTo {
 	public int getY2() {
 		return y2;
 	}
-	
+
 	public void setX1(int x1) {
 		this.x1 = x1;
 	}
@@ -73,8 +73,8 @@ public class CurveTo extends LineTo {
 	public void setY2(int y2) {
 		this.y2 = y2;
 	}
-	
-	public void set(int x1, int y1, int x2, int y2, int x, int y){
+
+	public void set(int x1, int y1, int x2, int y2, int x, int y) {
 		super.set(x, y);
 		this.x1 = x1;
 		this.y1 = y1;

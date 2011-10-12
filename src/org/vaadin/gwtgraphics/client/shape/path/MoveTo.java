@@ -80,20 +80,21 @@ public class MoveTo extends ClosePath {
 	}
 
 	/**
-	 * Sets if path step is relative. <code>True</code> means that coordinates are relative
-	 * and <code>False</code> that are relative.
+	 * Sets if path step is relative. <code>True</code> means that coordinates
+	 * are relative and <code>False</code> that are relative.
+	 * 
 	 * @param relativeCoords
-	 * 						coordinates are relative
+	 *            coordinates are relative
 	 */
 	public void setRelativeCoords(boolean relativeCoords) {
 		this.relativeCoords = relativeCoords;
 	}
 
 	/**
-	 * Sets x component of step coordinate 
+	 * Sets x component of step coordinate
 	 * 
-	 * @param x 
-	 * 			x coordinate
+	 * @param x
+	 *            x coordinate
 	 */
 	public void setX(int x) {
 		this.x = x;
@@ -103,13 +104,13 @@ public class MoveTo extends ClosePath {
 	 * Sets y component of step coordinate
 	 * 
 	 * @param y
-	 * 			y coordinate
+	 *            y coordinate
 	 */
 	public void setY(int y) {
 		this.y = y;
 	}
-	
-	public void set(int x, int y){
+
+	public void set(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}

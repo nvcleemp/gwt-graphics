@@ -281,28 +281,27 @@ public class SVGImpl {
 
 		SVGUtil.setAttributeNS(element, "d", path.toString());
 	}
-	
+
 	/**
-	 * Builds the string for single step
-	 * Needed when appending step to the end of path
-	 * @param step 
-	 * 				step which string we need 
+	 * Builds the string for single step Needed when appending step to the end
+	 * of path
+	 * 
+	 * @param step
+	 *            step which string we need
 	 * @return path step string
 	 */
-	public String getPathStepString(PathStep step){
+	public String getPathStepString(PathStep step) {
 		StringBuilder path = new StringBuilder();
 		if (step.getClass() == ClosePath.class) {
 			path.append(" z");
 		} else if (step.getClass() == MoveTo.class) {
 			MoveTo moveTo = (MoveTo) step;
 			path.append(moveTo.isRelativeCoords() ? " m" : " M")
-					.append(moveTo.getX()).append(" ")
-					.append(moveTo.getY());
+					.append(moveTo.getX()).append(" ").append(moveTo.getY());
 		} else if (step.getClass() == LineTo.class) {
 			LineTo lineTo = (LineTo) step;
 			path.append(lineTo.isRelativeCoords() ? " l" : " L")
-					.append(lineTo.getX()).append(" ")
-					.append(lineTo.getY());
+					.append(lineTo.getX()).append(" ").append(lineTo.getY());
 		} else if (step.getClass() == CurveTo.class) {
 			CurveTo curve = (CurveTo) step;
 			path.append(curve.isRelativeCoords() ? " c" : " C");
@@ -316,10 +315,9 @@ public class SVGImpl {
 			path.append(arc.isRelativeCoords() ? " a" : " A");
 			path.append(arc.getRx()).append(",").append(arc.getRy());
 			path.append(" ").append(arc.getxAxisRotation());
-			path.append(" ").append(arc.isLargeArc() ? "1" : "0")
-					.append(",").append(arc.isSweep() ? "1" : "0");
-			path.append(" ").append(arc.getX()).append(",")
-					.append(arc.getY());
+			path.append(" ").append(arc.isLargeArc() ? "1" : "0").append(",")
+					.append(arc.isSweep() ? "1" : "0");
+			path.append(" ").append(arc.getX()).append(",").append(arc.getY());
 		}
 		return path.toString();
 	}

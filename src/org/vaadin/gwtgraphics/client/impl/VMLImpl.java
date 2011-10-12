@@ -338,26 +338,24 @@ public class VMLImpl extends SVGImpl {
 		}
 		element.setAttribute("path", path.toString());
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public String getPathStepString(PathStep step) {
 		StringBuilder path = new StringBuilder();
-		
+
 		if (step.getClass() == ClosePath.class) {
 			path.append(" x e");
 		} else if (step.getClass() == MoveTo.class) {
 			MoveTo moveTo = (MoveTo) step;
 			path.append(moveTo.isRelativeCoords() ? " t" : " m")
-					.append(moveTo.getX()).append(" ")
-					.append(moveTo.getY());
+					.append(moveTo.getX()).append(" ").append(moveTo.getY());
 		} else if (step.getClass() == LineTo.class) {
 			LineTo lineTo = (LineTo) step;
 			path.append(lineTo.isRelativeCoords() ? " r" : " l")
-					.append(lineTo.getX()).append(" ")
-					.append(lineTo.getY());
+					.append(lineTo.getX()).append(" ").append(lineTo.getY());
 		} else if (step.getClass() == CurveTo.class) {
 			CurveTo curve = (CurveTo) step;
 			path.append(curve.isRelativeCoords() ? " v" : " c");
