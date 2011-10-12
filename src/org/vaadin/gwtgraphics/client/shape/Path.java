@@ -251,8 +251,7 @@ public class Path extends Shape implements Cloneable {
 			 * redrawn immediately.
 			 */
 			if (appended) {
-				getElement().getAttribute("d").concat(
-						getImpl().getPathStepString(step));
+				getImpl().getPathStepString(getElement(), step);
 			} else {
 				issueRedraw(false);
 			}
@@ -274,8 +273,7 @@ public class Path extends Shape implements Cloneable {
 					"The first step must be an absolute MoveTo step.");
 		} else {
 			steps.add(step);
-			getElement().getAttribute("d").concat(
-					getImpl().getPathStepString(step));
+			getImpl().getPathStepString(getElement(), step);
 		}
 	}
 

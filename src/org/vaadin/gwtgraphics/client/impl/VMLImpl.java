@@ -321,10 +321,10 @@ public class VMLImpl extends SVGImpl {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getPathStepString(PathStep step) {
+	public void getPathStepString(Element element, PathStep step) {
 		StringBuilder path = new StringBuilder();
 		appendPathStep(path, step);
-		return path.toString();
+		element.getAttribute("path").concat(path.toString());
 	}
 
 	private void appendPathStep(StringBuilder path, PathStep step) {

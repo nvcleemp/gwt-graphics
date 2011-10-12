@@ -255,15 +255,16 @@ public class SVGImpl {
 	/**
 	 * Builds the string for single step Needed when appending step to the end
 	 * of path
+	 * @param element 
 	 * 
 	 * @param step
 	 *            step which string we need
 	 * @return path step string
 	 */
-	public String getPathStepString(PathStep step) {
+	public void getPathStepString(Element element, PathStep step) {
 		StringBuilder path = new StringBuilder();
 		appendPathStep(path, step);
-		return path.toString();
+		element.getAttribute("d").concat(path.toString());
 	}
 
 	private void appendPathStep(StringBuilder path, PathStep step) {
