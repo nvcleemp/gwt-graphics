@@ -247,38 +247,8 @@ public class SVGImpl {
 	public void drawPath(Element element, List<PathStep> steps) {
 		StringBuilder path = new StringBuilder();
 		for (PathStep step : steps) {
-			if (step.getClass() == ClosePath.class) {
-				path.append(" z");
-			} else if (step.getClass() == MoveTo.class) {
-				MoveTo moveTo = (MoveTo) step;
-				path.append(moveTo.isRelativeCoords() ? " m" : " M")
-						.append(moveTo.getX()).append(" ")
-						.append(moveTo.getY());
-			} else if (step.getClass() == LineTo.class) {
-				LineTo lineTo = (LineTo) step;
-				path.append(lineTo.isRelativeCoords() ? " l" : " L")
-						.append(lineTo.getX()).append(" ")
-						.append(lineTo.getY());
-			} else if (step.getClass() == CurveTo.class) {
-				CurveTo curve = (CurveTo) step;
-				path.append(curve.isRelativeCoords() ? " c" : " C");
-				path.append(curve.getX1()).append(" ").append(curve.getY1());
-				path.append(" ").append(curve.getX2()).append(" ")
-						.append(curve.getY2());
-				path.append(" ").append(curve.getX()).append(" ")
-						.append(curve.getY());
-			} else if (step.getClass() == Arc.class) {
-				Arc arc = (Arc) step;
-				path.append(arc.isRelativeCoords() ? " a" : " A");
-				path.append(arc.getRx()).append(",").append(arc.getRy());
-				path.append(" ").append(arc.getxAxisRotation());
-				path.append(" ").append(arc.isLargeArc() ? "1" : "0")
-						.append(",").append(arc.isSweep() ? "1" : "0");
-				path.append(" ").append(arc.getX()).append(",")
-						.append(arc.getY());
-			}
+			appendPathStep(path, step);
 		}
-
 		SVGUtil.setAttributeNS(element, "d", path.toString());
 	}
 
@@ -292,6 +262,11 @@ public class SVGImpl {
 	 */
 	public String getPathStepString(PathStep step) {
 		StringBuilder path = new StringBuilder();
+		appendPathStep(path, step);
+		return path.toString();
+	}
+
+	private void appendPathStep(StringBuilder path, PathStep step) {
 		if (step.getClass() == ClosePath.class) {
 			path.append(" z");
 		} else if (step.getClass() == MoveTo.class) {
@@ -319,7 +294,6 @@ public class SVGImpl {
 					.append(arc.isSweep() ? "1" : "0");
 			path.append(" ").append(arc.getX()).append(",").append(arc.getY());
 		}
-		return path.toString();
 	}
 
 	public String getText(Element element) {
