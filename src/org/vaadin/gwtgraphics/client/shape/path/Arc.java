@@ -63,6 +63,26 @@ public class Arc extends LineTo {
 	public boolean isSweep() {
 		return sweep;
 	}
+	
+	public void setRx(int rx) {
+		this.rx = rx;
+	}
+
+	public void setRy(int ry) {
+		this.ry = ry;
+	}
+
+	public void setxAxisRotation(int xAxisRotation) {
+		this.xAxisRotation = xAxisRotation;
+	}
+
+	public void setLargeArc(boolean largeArc) {
+		this.largeArc = largeArc;
+	}
+
+	public void setSweep(boolean sweep) {
+		this.sweep = sweep;
+	}
 
 	@Override
 	public String getSVGString() {

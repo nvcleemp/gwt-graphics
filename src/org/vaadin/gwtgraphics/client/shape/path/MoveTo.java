@@ -24,11 +24,11 @@ package org.vaadin.gwtgraphics.client.shape.path;
  */
 public class MoveTo extends ClosePath {
 
-	protected final boolean relativeCoords;
+	protected boolean relativeCoords;
 
-	protected final int x;
+	protected int x;
 
-	protected final int y;
+	protected int y;
 
 	/**
 	 * Instantiates a new MoveTo step with given properties.
@@ -77,5 +77,40 @@ public class MoveTo extends ClosePath {
 	@Override
 	public String getSVGString() {
 		return isRelativeCoords() ? "m" : "M" + getX() + " " + getY();
+	}
+
+	/**
+	 * Sets if path step is relative. <code>True</code> means that coordinates are relative
+	 * and <code>False</code> that are relative.
+	 * @param relativeCoords
+	 * 						coordinates are relative
+	 */
+	public void setRelativeCoords(boolean relativeCoords) {
+		this.relativeCoords = relativeCoords;
+	}
+
+	/**
+	 * Sets x component of step coordinate 
+	 * 
+	 * @param x 
+	 * 			x coordinate
+	 */
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	/**
+	 * Sets y component of step coordinate
+	 * 
+	 * @param y
+	 * 			y coordinate
+	 */
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+	public void set(int x, int y){
+		this.x = x;
+		this.y = y;
 	}
 }
