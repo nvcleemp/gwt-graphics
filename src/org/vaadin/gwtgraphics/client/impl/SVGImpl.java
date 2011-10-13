@@ -216,7 +216,7 @@ public class SVGImpl {
 		SVGUtil.setAttributeNS(element, "height", height);
 		if (element.getTagName().equalsIgnoreCase("svg")) {
 			element.getParentElement().getStyle()
-					.setPropertyPx("height", height);
+			.setPropertyPx("height", height);
 		}
 	}
 
@@ -268,32 +268,32 @@ public class SVGImpl {
 	}
 
 	private void appendPathStep(StringBuilder path, PathStep step) {
-		if (step.getClass() == ClosePath.class) {
-			path.append(" z");
-		} else if (step.getClass() == MoveTo.class) {
-			MoveTo moveTo = (MoveTo) step;
-			path.append(moveTo.isRelativeCoords() ? " m" : " M")
-					.append(moveTo.getX()).append(" ").append(moveTo.getY());
-		} else if (step.getClass() == LineTo.class) {
-			LineTo lineTo = (LineTo) step;
-			path.append(lineTo.isRelativeCoords() ? " l" : " L")
-					.append(lineTo.getX()).append(" ").append(lineTo.getY());
-		} else if (step.getClass() == CurveTo.class) {
-			CurveTo curve = (CurveTo) step;
-			path.append(curve.isRelativeCoords() ? " c" : " C");
-			path.append(curve.getX1()).append(" ").append(curve.getY1());
-			path.append(" ").append(curve.getX2()).append(" ")
-					.append(curve.getY2());
-			path.append(" ").append(curve.getX()).append(" ")
-					.append(curve.getY());
-		} else if (step.getClass() == Arc.class) {
+		if (step instanceof Arc) {
 			Arc arc = (Arc) step;
 			path.append(arc.isRelativeCoords() ? " a" : " A");
 			path.append(arc.getRx()).append(",").append(arc.getRy());
 			path.append(" ").append(arc.getxAxisRotation());
 			path.append(" ").append(arc.isLargeArc() ? "1" : "0").append(",")
-					.append(arc.isSweep() ? "1" : "0");
+			.append(arc.isSweep() ? "1" : "0");
 			path.append(" ").append(arc.getX()).append(",").append(arc.getY());
+		} else if (step instanceof CurveTo) {
+			CurveTo curve = (CurveTo) step;
+			path.append(curve.isRelativeCoords() ? " c" : " C");
+			path.append(curve.getX1()).append(" ").append(curve.getY1());
+			path.append(" ").append(curve.getX2()).append(" ")
+			.append(curve.getY2());
+			path.append(" ").append(curve.getX()).append(" ")
+			.append(curve.getY());
+		} else if (step instanceof LineTo) {
+			LineTo lineTo = (LineTo) step;
+			path.append(lineTo.isRelativeCoords() ? " l" : " L")
+			.append(lineTo.getX()).append(" ").append(lineTo.getY());
+		} else if (step instanceof MoveTo) {
+			MoveTo moveTo = (MoveTo) step;
+			path.append(moveTo.isRelativeCoords() ? " m" : " M")
+			.append(moveTo.getX()).append(" ").append(moveTo.getY());
+		}else if (step instanceof ClosePath) {
+			path.append(" z");
 		}
 	}
 
