@@ -24,7 +24,7 @@ import java.util.List;
  * @author Henri Kerola
  * 
  */
-public class Group extends VectorObject implements VectorObjectContainer {
+public class Group extends VectorObject implements VectorObjectContainer, Positionable {
 
 	private List<VectorObject> childrens = new ArrayList<VectorObject>();
 
@@ -164,5 +164,25 @@ public class Group extends VectorObject implements VectorObjectContainer {
 		for (VectorObject vo : childrens) {
 			vo.onDetach();
 		}
+	}
+
+	@Override
+	public int getX() {
+		return getImpl().getX(getElement());
+	}
+
+	@Override
+	public void setX(int x) {
+		getImpl().setX(getElement(), x, isAttached());
+	}
+
+	@Override
+	public int getY() {
+		return getImpl().getY(getElement());
+	}
+
+	@Override
+	public void setY(int y) {
+		getImpl().setY(getElement(), y, isAttached());
 	}
 }

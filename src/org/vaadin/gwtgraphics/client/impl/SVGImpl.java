@@ -42,6 +42,8 @@ import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style;
+import com.google.gwt.regexp.shared.MatchResult;
+import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
@@ -101,8 +103,13 @@ public class SVGImpl {
 	}
 
 	public int getX(Element element) {
-		return NumberUtil.parseIntValue(element,
-				getPosAttribute(element, true), 0);
+		if ( element.getTagName().toLowerCase().equals("g") ){
+			MatchResult r = getTranslation(element);
+			return r != null && r.getGroupCount() == 4 ? NumberUtil.parseIntValue(r.getGroup(1), 0) : 0;
+		}else{
+			return NumberUtil.parseIntValue(element,
+					getPosAttribute(element, true), 0);
+		}
 	}
 
 	public void setX(final Element element, final int x, final boolean attached) {
@@ -110,8 +117,14 @@ public class SVGImpl {
 	}
 
 	public int getY(Element element) {
-		return NumberUtil.parseIntValue(element,
-				getPosAttribute(element, false), 0);
+		if ( element.getTagName().toLowerCase().equals("g") ){
+			MatchResult r = getTranslation(element);
+			return r != null && r.getGroupCount() == 4 ? NumberUtil.parseIntValue(r.getGroup(3), 0) : 0;
+		}else{
+			return NumberUtil.parseIntValue(element,
+					getPosAttribute(element, false), 0);
+		}
+
 	}
 
 	public void setY(final Element element, final int y, final boolean attached) {
@@ -120,17 +133,41 @@ public class SVGImpl {
 
 	private void setXY(final Element element, boolean x, final int value,
 			final boolean attached) {
-		final int rotation = getRotation(element);
-		final String posAttr = getPosAttribute(element, x);
-		SVGUtil.setAttributeNS(element, posAttr, value);
-		if (rotation != 0) {
-			Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-				public void execute() {
-					SVGUtil.setAttributeNS(element, "transform", "");
-					SVGUtil.setAttributeNS(element, posAttr, value);
-					setRotateTransform(element, rotation, attached);
+		if ( element.getTagName().toLowerCase().equals("g")){
+			int other = x ? getY(element) : getX(element);
+			StringBuilder sb = new StringBuilder("translate(");
+			if ( x ){
+				sb.append(value).append(",").append(other);
+			}else{
+				sb.append(other).append(",").append(value);
+			}
+			sb.append(")");
+			RegExp p = RegExp.compile("translate\\(.+\\)");
+			String xform = element.getAttribute("transform");
+			if ( xform != null ){
+				sb.append(" ");
+				MatchResult r = p.exec(xform);
+				if ( r.getGroupCount() > 0 ){
+					p.replace(xform, sb.toString());
+				}else{
+					xform = sb.append(xform).toString();
 				}
-			});
+
+			}
+			element.setAttribute("transform", sb.toString());
+		}else{
+			final int rotation = getRotation(element);
+			final String posAttr = getPosAttribute(element, x);
+			SVGUtil.setAttributeNS(element, posAttr, value);
+			if (rotation != 0) {
+				Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+					public void execute() {
+						SVGUtil.setAttributeNS(element, "transform", "");
+						SVGUtil.setAttributeNS(element, posAttr, value);
+						setRotateTransform(element, rotation, attached);
+					}
+				});
+			}
 		}
 	}
 
@@ -148,6 +185,11 @@ public class SVGImpl {
 			attr = x ? "x1" : "y1";
 		}
 		return attr;
+	}
+
+	private MatchResult getTranslation(Element e){
+		String xform = e.getAttribute("transform");
+		return xform != null ? RegExp.compile("translate\\(\\s*(\\d+)\\s*(,\\s*(\\d+))?\\s*\\)","i").exec(xform) : null;
 	}
 
 	public String getFillColor(Element element) {

@@ -39,6 +39,8 @@ import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.regexp.shared.MatchResult;
+import com.google.gwt.regexp.shared.RegExp;
 
 /**
  * This class contains the VML implementation module of GWT Graphics.
@@ -131,7 +133,13 @@ public class VMLImpl extends SVGImpl {
 
 	@Override
 	public int getX(Element element) {
-		return element.getPropertyInt("_x");
+		String tagName = VMLUtil.getTagName(element);
+		if ( tagName.toLowerCase().equals("group") ){
+			MatchResult r = getCoordOrigin(element);
+			return r != null && r.getGroupCount() == 3 ? NumberUtil.parseIntValue(r.getGroup(1), 0) : 0;
+		}else{
+			return element.getPropertyInt("_x");
+		}
 	}
 
 	@Override
@@ -141,12 +149,23 @@ public class VMLImpl extends SVGImpl {
 
 	@Override
 	public int getY(Element element) {
-		return element.getPropertyInt("_y");
+		String tagName = VMLUtil.getTagName(element);
+		if ( tagName.toLowerCase().equals("group") ){
+			MatchResult r = getCoordOrigin(element);
+			return r != null && r.getGroupCount() == 3 ? NumberUtil.parseIntValue(r.getGroup(2), 0) : 0;
+		}else{
+			return element.getPropertyInt("_y");
+		}
 	}
 
 	@Override
 	public void setY(Element element, int y, boolean attached) {
 		setXY(element, y, false, attached);
+	}
+	
+	private MatchResult getCoordOrigin(Element e){
+		String coordorigin = e.getAttribute("coordorigin");
+		return coordorigin != null ? RegExp.compile("(\\-?\\d+)\\s(\\-?\\d+)").exec(coordorigin) : null;
 	}
 
 	@Override
@@ -381,7 +400,17 @@ public class VMLImpl extends SVGImpl {
 		element.setPropertyInt(x ? "_x" : "_y", xy);
 
 		String tagName = VMLUtil.getTagName(element);
-		if (tagName.equals("line")) {
+		if ( tagName.equals("group")){
+			int other = x ? getY(element) : getX(element);
+			
+			StringBuilder sb = new StringBuilder();
+			if ( x ){
+				sb.append(-xy).append(" ").append(other);
+			}else{
+				sb.append(other).append(" ").append(-xy);
+			}
+			element.setAttribute("coordorigin", sb.toString());
+		}else if (tagName.equals("line")) {
 			if (x) {
 				setLineFromTo(element, xy, null, true);
 			} else {
