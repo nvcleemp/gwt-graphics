@@ -1,0 +1,1 @@
+GWT Graphics jar can be downloaded from [Vaadin Directory](http://vaadin.com/addon/gwt-graphics).
